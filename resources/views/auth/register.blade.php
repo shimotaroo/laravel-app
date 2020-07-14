@@ -10,7 +10,7 @@
         <div class="mx-auto col-12 col-sm-11 col-md-9 col-lg-7 col-xl-6">
             <div class="card mt-5">
                 <div class="card-body text-center">
-                    <h2 class='h3 card-title text-center mt-2'>新規登録</h2>
+                    <h2 class='h3 card-title text-center mt-2 mb-1'>新規登録</h2>
                     <small>sign up</small>
 
                     @include('error_card_list')

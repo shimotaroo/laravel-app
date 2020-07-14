@@ -21,6 +21,8 @@ class CreateArticlesTable extends Migration
             $table->foreign('prefecture_id')->references('id')->on('prefectures');
             $table->bigInteger('company_type_id')->unsigned();
             $table->foreign('company_type_id')->references('id')->on('company_types');
+            $table->bigInteger('phase_id')->unsigned();
+            $table->foreign('phase_id')->references('id')->on('phases');
             $table->text('question_content');
             $table->text('other_information');
             $table->text('impression');
