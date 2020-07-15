@@ -11,7 +11,7 @@
                     <i class="fas fa-file-alt fa-3x mr-3"></i>
                     <div>
                         <div class='font-weight-bold'>
-                            {{ $article->user->name }}
+                            {{ $article->name }}
                         </div>
                         <div class='font-weight-lighter'>
                             {{ $article->created_at->format('y/m/d') }}
@@ -21,10 +21,13 @@
 
                 <div class='card-body pt-0 pb-2'>
                     <h3 class='h5 card-title'>
-                        都道府県：{{  $article->prefecture }}
+                        都道府県：{{ $article->prefecture }}
                     </h3>
                     <h3 class='h5 card-title'>
                         タイプ：{{  $article->company_type }}
+                    </h3>
+                    <h3 class='h5 card-title'>
+                        フェーズ：{{  $article->phase }}
                     </h3>
                     <a class='btn btn-outline-info waves-effect' href="">Read More</a>
                 </div>

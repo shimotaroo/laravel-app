@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Article extends Model
 {
+    protected $dates = [
+        'created_at'
+    ];
+
     //Usersモデルへのリレーション追加
     public function user(): BelongsTo
     {
@@ -21,6 +25,11 @@ class Article extends Model
     public function companyType(): BelongsTo
     {
         return $this->belongsTo('App\CompanyType');
+    }
+
+    public function Phase(): BelongsTo
+    {
+        return $this->belongsTo('App\Phase');
     }
 
 }
