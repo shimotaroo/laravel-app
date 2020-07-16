@@ -33,7 +33,7 @@
 </div>
 
 <div class="mb-4">
-    <span class="mr-3">フェーズ</span>
+    <span class="mr-3">選考フェーズ</span>
     <div class="form-check form-check-inline">
         <input type="radio" name='phase_id' id="phase1" class='form-check-input' value=1>
         <label class="form-check-label" for="phase1">1次面接</label>

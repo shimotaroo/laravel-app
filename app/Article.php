@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Article extends Model
 {
-    protected $dates = [
-        'created_at'
+    protected $fillable = [
+        'prefecture_id',
+        'company_type_id',
+        'phase_id',
+        'question_content',
+        'other_information',
+        'impression',
     ];
 
     //Usersモデルへのリレーション追加
@@ -27,7 +32,7 @@ class Article extends Model
         return $this->belongsTo('App\CompanyType');
     }
 
-    public function Phase(): BelongsTo
+    public function phase(): BelongsTo
     {
         return $this->belongsTo('App\Phase');
     }

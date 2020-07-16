@@ -24,6 +24,9 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
+            'prefecture_id' => 'required',
+            'company_type_id' => 'required',
+            'phase_id' => 'required',
             'question_content' => 'required|max:1000',
             'other_information' => 'required|max:1000',
             'impression' => 'required|max:1000',
@@ -33,6 +36,9 @@ class ArticleRequest extends FormRequest
     public function attributes()
     {
         return [
+            'prefecture_id' => 'エリア',
+            'company_type_id' => '事業形態',
+            'phase_id' => '選考フェーズ',
             'question_content' => '面接で聞かれた質問',
             'other_information' => 'その他情報',
             'impression' => '所感・アドバイス等'

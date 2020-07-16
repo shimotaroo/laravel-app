@@ -11,15 +11,8 @@ class ArticleController extends Controller
 {
     public function index()
     {
-
-        $articles = DB::table('articles')
-            ->join('users', 'user_id', '=', 'users.id')
-            ->join('prefectures', 'prefecture_id', '=', 'prefectures.id')
-            ->join('company_types', 'company_type_id', '=', 'company_types.id')
-            ->join('phases', 'phase_id', '=', 'phases.id')
-            ->select('users.name', 'articles.created_at', 'prefectures.prefecture', 'company_types.company_type', 'phases.phase', 'question_content', 'other_information', 'impression')
-            ->get();
-
+        // $articles = Article::with(['prefecture', 'companyType', 'phase'])->get();
+        $articles = Article::all();
         return view('articles.index', ['articles' => $articles]);
     }
 
@@ -30,12 +23,7 @@ class ArticleController extends Controller
 
     public function store(ArticleRequest $request, Article $article)
     {
-        $article->prefecture_id = $request->prefecture_id;
-        $article->company_type_id = $request->company_type_id;
-        $article->phase_id = $request->phase_id;
-        $article->question_content = $request->question_content;
-        $article->other_information = $request->other_information;
-        $article->impression = $request->impression;
+        $article->fill($request->all());
         $article->user_id = $request->user()->id;
         $article->save();
         return redirect()->route('articles.index');
