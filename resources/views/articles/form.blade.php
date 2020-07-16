@@ -19,21 +19,21 @@
 <div class="mb-4">
     <span class="mr-3">事業形態</span>
     <div class="form-check form-check-inline">
-        <input type="radio" name='company_id' id="company1" class='form-check-input' value=1>
+        <input type="radio" name='company_type_id' id="company1" class='form-check-input' value=1>
         <label class="form-check-label" for="company1">自社開発企業</label>
     </div>
     <div class="form-check form-check-inline">
-        <input type="radio" name='company_id' id="company2" class='form-check-input' value=2>
+        <input type="radio" name='company_type_id' id="company2" class='form-check-input' value=2>
         <label class="form-check-label" for="company2">受託開発企業</label>
     </div>
     <div class="form-check form-check-inline">
-        <input type="radio" name='company_id' id="company3" class='form-check-input' value=3>
+        <input type="radio" name='company_type_id' id="company3" class='form-check-input' value=3>
         <label class="form-check-label" for="company3">SES</label>
     </div>
 </div>
 
 <div class="mb-4">
-    <span class="mr-3">フェーズ</span>
+    <span class="mr-3">選考フェーズ</span>
     <div class="form-check form-check-inline">
         <input type="radio" name='phase_id' id="phase1" class='form-check-input' value=1>
         <label class="form-check-label" for="phase1">1次面接</label>
