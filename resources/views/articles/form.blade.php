@@ -50,16 +50,16 @@
 
 <div class="form-group text-left">
     <label>面接で聞かれた質問</label>
-    <textarea name="question_content" class="form-control" required rows="10" placeholder="(例)・なぜエンジニアになろうと思ったのか">{{ old('question_content') }}</textarea>
+    <textarea name="question_content" class="form-control" required rows="10" placeholder="(例)・なぜエンジニアになろうと思ったのか">{{ $articles->prefecturre->prefecture ?? old('question_content') }}</textarea>
 </div>
 
 <div class="form-group text-left">
     <label>その他情報</label>
-    <textarea name="other_information" class="form-control" required rows="10" placeholder="(例)・面接担当は人事1名、エンジニア1名">{{ old('other_information') }}</textarea>
+    <textarea name="other_information" class="form-control" required rows="10" placeholder="(例)・面接担当は人事1名、エンジニア1名">{{ $article->companyType->company_type ?? old('other_information') }}</textarea>
 </div>
 
 <div class="form-group text-left">
     <label>所感・アドバイス等</label>
-    <textarea name="impression" class="form-control" required rows="10" placeholder="(例)・転職理由を答える際はネガティブな内容にならないように気をつける">{{ old('question_content') }}</textarea>
+    <textarea name="impression" class="form-control" required rows="10" placeholder="(例)・転職理由を答える際はネガティブな内容にならないように気をつける">{{ $article->phase->phase ?? old('question_content') }}</textarea>
 </div>
 
