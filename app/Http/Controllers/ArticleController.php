@@ -19,7 +19,8 @@ class ArticleController extends Controller
     //投稿画面
     public function create()
     {
-        return view('articles.create');
+        $article = null;
+        return view('articles.create', ['article' => $article]);
     }
 
     //投稿処理
@@ -36,6 +37,14 @@ class ArticleController extends Controller
     {
         return view('articles.edit', ['article' => $article]);
     }
+
+    //編集処理
+    public function update(ArticleRequest $request, Article $article)
+    {
+        $article->fill($request->all())->save();
+        return redirect()->route('articles.index');
+    }
+
 
 
 

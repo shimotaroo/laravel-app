@@ -17,7 +17,7 @@
                         @include('error_card_list')
 
                         <div class="mt-5">
-                            <form action="{{ route('articles.update', ['article => $article']) }}" method="POST">
+                            <form action="{{ route('articles.update', ['article' => $article]) }}" method="POST">
                                 @method('PATCH')
                                 @include('articles.form')
                                 <button type="submit" class="btn btn-block btn-outline-info waves-effect mt-4 mb-2">
