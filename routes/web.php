@@ -18,3 +18,8 @@ Route::get('/', 'ArticleController@index')->name('articles.index');
 //authミドルウェアでログイン済かチェック
 Route::resource('/articles', 'ArticleController')->except(['index', 'show'])->middleware('auth');
 Route::resource('/articles', 'ArticleController')->only(['show']);
+
+//ユーザーページ表示
+Route::prefix('users')->name('users.')->group(function(){
+    Route::get('/{name}', 'UserController@show')->name('show');
+});
