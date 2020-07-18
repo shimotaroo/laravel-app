@@ -16,11 +16,14 @@ class ArticleController extends Controller
         return view('articles.index', ['articles' => $articles]);
     }
 
+    //投稿画面
     public function create()
     {
-        return view('articles.create');
+        $article = null;
+        return view('articles.create', ['article' => $article]);
     }
 
+    //投稿処理
     public function store(ArticleRequest $request, Article $article)
     {
         $article->fill($request->all());
@@ -28,6 +31,21 @@ class ArticleController extends Controller
         $article->save();
         return redirect()->route('articles.index');
     }
+
+    //編集画面
+    public function edit(Article $article)
+    {
+        return view('articles.edit', ['article' => $article]);
+    }
+
+    //編集処理
+    public function update(ArticleRequest $request, Article $article)
+    {
+        $article->fill($request->all())->save();
+        return redirect()->route('articles.index');
+    }
+
+
 
 
 }
