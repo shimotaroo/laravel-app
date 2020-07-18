@@ -1,4 +1,4 @@
-<nav class='navbar navbar-expand navbar-dark info-color'>
+<nav class='navbar navbar-expand navbar-dark cyan darken-3'>
 
     <a class="navbar-brand" href="/">mensetsu</a>
 
@@ -28,11 +28,11 @@
                 <i class="fas fa-user-circle"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                <button class="dropdown-item" type="button" onclick="location.href=''">
+                <button class="dropdown-item text-center" type="button" onclick="location.href=''">
                     マイページ
                 </button>
                 <div class="dropdown-divider"></div>
-                <button form="logout-button" class="dropdown-item" type="submit">
+                <button form="logout-button" class="dropdown-item text-center" type="submit">
                     ログアウト
                 </button>
             </div>

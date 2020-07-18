@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
+    //ポリシーをコントローラーで使用できるようにする
+    public function __construct()
+    {
+        $this->authorizeResource(Article::class, 'article');
+    }
+
     public function index()
     {
         // $articles = Article::with(['prefecture', 'companyType', 'phase'])->get();
@@ -50,6 +56,12 @@ class ArticleController extends Controller
     {
         $article->delete();
         return redirect()->route('articles.index');
+    }
+
+    //詳細画面
+    public function show(Article $article)
+    {
+        return view('articles.show', ['article' => $article]);
     }
 
 

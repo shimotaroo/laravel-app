@@ -16,4 +16,5 @@ Auth::routes();
 Route::get('/', 'ArticleController@index')->name('articles.index');
 //indexのルーティングを削除
 //authミドルウェアでログイン済かチェック
-Route::resource('/articles', 'ArticleController')->except(['index'])->middleware('auth');
+Route::resource('/articles', 'ArticleController')->except(['index', 'show'])->middleware('auth');
+Route::resource('/articles', 'ArticleController')->only(['show']);

@@ -19,7 +19,7 @@
                         <div class="mt-5">
                             <form action="{{ route('articles.store') }}" method="POST">
                                 @include('articles.form')
-                                <button type="submit" class="btn btn-block btn-outline-info waves-effect mt-4 mb-2">
+                                <button type="submit" class="btn btn-block cyan darken-1 text-white mt-4 mb-2">
                                     投稿する
                                 </button>
                             </form>
@@ -29,5 +29,6 @@
             </div>
         </div>
     </div>
+    @include('footer')
 
 @endsection

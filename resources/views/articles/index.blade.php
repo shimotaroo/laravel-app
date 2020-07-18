@@ -77,9 +77,10 @@
                     <h3 class='h5 card-title'>
                         選考フェーズ：{{  $article->phase->phase }}
                     </h3>
-                    <a class='btn btn-outline-info waves-effect' href="">Read More</a>
+                    <a class='btn cyan darken-1 text-white' href="{{ route('articles.show', ['article' => $article]) }}">Read More</a>
                 </div>
             </div>
         @endforeach
     </div>
+    @include('footer')
 @endsection
