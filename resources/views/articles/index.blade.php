@@ -79,6 +79,12 @@
                     </h3>
                     <a class='btn cyan darken-1 text-white' href="{{ route('articles.show', ['article' => $article]) }}">Read More</a>
                 </div>
+                <div class='card-body pt-0 pb-2 pl-3'>
+                    <div class="card-text">
+                        <article-like>
+                        </article-like>
+                    </div>
+                </div>
             </div>
         @endforeach
     </div>
