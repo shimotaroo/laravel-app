@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
 
 class RegisterController extends Controller
 {
@@ -71,5 +73,42 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function showProviderUserRegistrationForm(Request $request, string $provider)
+    {
+        $token = $request->token;
+
+        $providerUser = Socialite::driver($provider)->userFromToken($token);
+
+        return view('auth.social_register', [
+            'provider' => $provider,
+            'email' => $providerUser->getEmail(),
+            'token' => $providerUser->token,
+        ]);
+    }
+
+    public function registerProviderUser(Request $request, string $provider)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:15', 'unique:users'],
+            'age' => ['numeric', 'min:1', 'max:100', 'nullable'],
+            'token' => ['required', 'string'],
+        ]);
+
+        $token = $request->token;
+
+        $providerUser = Socialite::driver($provider)->userFromToken($token);
+
+        $user = User::create([
+            'name' => $request->name,
+            'age' => $request->age,
+            'email' => $providerUser->getEmail(),
+            'password' => null,
+        ]);
+
+        $this->guard()->login($user, true);
+
+        return $this->registered($request, $user) ?: redirect($this->redirectPath());
     }
 }

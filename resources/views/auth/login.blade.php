@@ -13,6 +13,10 @@
                     <h2 class='h3 card-title text-center mt-2 mb-1'>ログイン</h2>
                     <small>sign in</small>
 
+                    <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-block btn-danger">
+                        <i class="fab fa-google mr-1"></i>Googleでログイン
+                    </a>
+
                     @include('error_card_list')
 
                     <div class="card-text">
@@ -28,7 +32,7 @@
                                 <small>8文字以上で入力してください</small>
                             </div>
                             <input type="hidden" name="remember" id="remember" value="on">
-                            <button class="btn btn-block btn-outline-info waves-effect mt-2 mb-2" type="submit">
+                            <button class="btn btn-block cyan darken-1 text-white mt-2 mb-2" type="submit">
                                 ログイン
                             </button>
                         </form>
