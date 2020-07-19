@@ -11,8 +11,19 @@
 |
 */
 
-//
+//認証系のルーティングを追加
 Auth::routes();
+//Google用
+Route::prefix('login')->name('login.')->group(function(){
+    Route::get('/{provider}', 'Auth\LoginController@redirectToProvider')->name('{provider}');
+    Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('{provider}.callback');
+});
+//Googleログイン時のユーザー登録
+Route::prefix('register')->name('register.')->group(function(){
+    Route::get('/{provider}', 'Auth\RegisterController@showProviderUserRegistrationForm')->name('{provider}');
+    Route::post('/{provider}', 'Auth\RegisterController@registerProviderUser')->name('{provider}');
+});
+//topページ
 Route::get('/', 'ArticleController@index')->name('articles.index');
 //indexのルーティングを削除
 //authミドルウェアでログイン済かチェック
