@@ -2,7 +2,7 @@
     <div>
         <button type="button" class="btn m-0 p-1 shadow-none">
             <i class="fas fa-heart mr-1"
-                :class="{'red-text':this.isLikedByUser}"
+                :class="{'red-text':this.isLikedByUser, 'animated heartBeat fast':this.gotToLike}"
                 @click="clickLike"
             />
         </button>
@@ -33,6 +33,7 @@
             return {
                 isLikedByUser: this.initialIsLikedByUser,
                 countLikes: this.initialCountLikes,
+                gotToLike: false,
             }
         },
         methods: {
@@ -49,12 +50,14 @@
 
                 this.isLikedByUser = true
                 this.countLikes = response.data.countLikes
+                this.gotToLike = true
             },
             async unlike() {
                 const response = await axios.delete(this.endpoint)
 
                 this.isLikedByUser = false
                 this.countLikes = response.data.countLikes
+                this.gotToLike = false
             },
         },
     }
