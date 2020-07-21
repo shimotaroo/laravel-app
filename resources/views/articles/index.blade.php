@@ -79,6 +79,17 @@
                     </h3>
                     <a class='btn cyan darken-1 text-white' href="{{ route('articles.show', ['article' => $article]) }}">Read More</a>
                 </div>
+                <div class='card-body pt-0 pb-2 pl-3'>
+                    <div class="card-text">
+                        <article-like
+                            :initial-is-liked-by-user='@json($article->isLikedByUser(Auth::user()))'
+                            :initial-count-likes='@json($article->count_likes)'
+                            :authorized='@json(Auth::check())'
+                            endpoint="{{ route('articles.like', ['article' => $article]) }}"
+                        >
+                        </article-like>
+                    </div>
+                </div>
             </div>
         @endforeach
     </div>

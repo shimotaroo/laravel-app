@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Article extends Model
 {
@@ -37,4 +38,22 @@ class Article extends Model
         return $this->belongsTo('App\Phase');
     }
 
+    //「いいね」におけるArticleとUserの関係は多対多
+    public function likes(): BelongsToMany
+    {
+        return $this->belongsToMany('App\User', 'likes')->withTimestamps();
+    }
+
+    //ユーザーがいいね済みかどうかを判定するメソッド
+    public function isLikedByUser(?User $user): bool
+    {
+        //->likeでArticleモデルからlikesテーブルに紐づくUserモデルがコレクションで返る
+        return $user ? (bool)$this->likes->where('id', $user->id)->count() : false;
+    }
+
+    //現在のいいね数を算出するメソッド
+    public function getCountLikesAttribute(): int
+    {
+        return $this->likes->count();
+    }
 }
