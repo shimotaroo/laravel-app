@@ -5,8 +5,17 @@
 @section('content')
     @include('nav')
     <div class='container'>
+        <div class='card mt-4 text-center'>
+            <h3 class="font-weight-bold pt-3 pb-2">mensetsu</h3>
+            <div class="card-body pt-0 pb-2">
+                <img src="{{ asset('/public/images/index.jpg') }}" alt="">
+                <p>皆さんの面接情報を共有できるサービスです</p>
+            </div>
+        </div>
+
+        </section>
         @foreach($articles as $article)
-            <div class='card mt-4'>
+            <div class='card mt-4 col-8 mr-auto ml-auto'>
                 <div class='card-body d-flex flex-row'>
                     <i class="fas fa-file-alt fa-3x mr-3"></i>
                     <div>
