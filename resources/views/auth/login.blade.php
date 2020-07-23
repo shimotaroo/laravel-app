@@ -9,11 +9,11 @@
     <div class="row">
         <div class="mx-auto col-12 col-sm-11 col-md-9 col-lg-7 col-xl-6">
             <div class="card mt-5">
-                <div class="card-body text-center">
-                    <h2 class='h3 card-title text-center mt-2 mb-1'>ログイン</h2>
-                    <small>sign in</small>
+                <div class="card-body text-center mt-5">
+                    <h2 class='h4 card-title text-center mt-5 mb-1'><span class="bg cyan darken-3 text-white py-3 px-4 rounded-pill">ログイン</span></h2>
+                    <p class="mt-4">Login</p>
 
-                    <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-block btn-danger">
+                    <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-block btn-danger my-3">
                         <i class="fab fa-google mr-1"></i>Googleでログイン
                     </a>
 
@@ -37,7 +37,7 @@
                             </button>
                         </form>
 
-                        <div class="mt-4">
+                        <div class="mt-4 mb-5">
                             <a class="card-text" href="{{ route('register') }}">新規登録はこちら</a>
                         </div>
                     </div>

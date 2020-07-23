@@ -9,10 +9,10 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <div class="card mt-5 mb-5">
-                    <div class="card-body pt-0 text-center">
-                        <h2 class='h3 card-title text-center mt-5 mb-1'>面接情報編集</h2>
-                        <small>Edit</small>
+                <div class="card mt-5 mb-3">
+                    <div class="card-body text-center">
+                        <h2 class='h4 card-title text-center mt-5 mb-1'><span class="bg cyan darken-3 text-white py-3 px-4 rounded-pill">面接情報を編集する</span></h2>
+                        <p class="mt-4">Edit</p>
 
                         @include('error_card_list')
 
