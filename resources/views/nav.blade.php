@@ -1,6 +1,7 @@
 <nav class='navbar navbar-expand navbar-dark cyan darken-3'>
 
     <a class="navbar-brand" href="/">mensetsu</a>
+    <small class="text-white">~面接情報の共有サービス~</small>
 
     <ul class="navbar-nav ml-auto">
 
