@@ -4,53 +4,58 @@
 
 @section('content')
     @include('nav')
-    <div class="container">
-        <div class="card mt-3">
-            <div class="card-body">
-                <div class="d-flex flex-row">
-                <a href="{{ route('users.show', ['name' => $user->name]) }}" class="text-dark">
-                    <i class="fas fa-user-circle fa-3x"></i>
-                </a>
+    <div class="row">
+        <div class="container col-lg-6 col-md-8 col-sm-10 col-xs-12 mx-auto">
+            <div class="card mt-5">
+                <div class="card-body text-center">
+                    <h2 class='h4 card-title text-center mt-5 mb-1'><span class="bg cyan darken-3 text-white py-3 px-4 rounded-pill">マイページ</span></h2>
+                    <p class="mt-4">My Page</p>
                 </div>
-                <h2 class="h5 card-title m-0">
-                <a href="{{ route('users.show', ['name' => $user->name]) }}" class="text-dark">
-                    {{ $user->name }}
-                </a>
-                </h2>
-            </div>
-            <div class="card-body">
-                <div class="card-text">
-                <a href="" class="text-muted">
-                    10 フォロー
-                </a>
-                <a href="" class="text-muted">
-                    10 フォロワー
-                </a>
+                <div class="card-body d-flex flex-row align-items-center mt-2 mb-3">
+                    <div class="ml-4">
+                        <a href="{{ route('users.show', ['name' => $user->name]) }}" class="text-dark">
+                            <i class="fas fa-user-circle fa-3x"></i>
+                        </a>
+                    </div>
+                    <h2 class="h5 card-title ml-3 mb-0">
+                        <a href="{{ route('users.show', ['name' => $user->name]) }}" class="text-dark">
+                            {{ $user->name }}
+                        </a>
+                    </h2>
                 </div>
+                {{-- <div class="card-body">
+                    <div class="card-text">
+                    <a href="" class="text-muted">
+                        10 フォロー
+                    </a>
+                    <a href="" class="text-muted">
+                        10 フォロワー
+                    </a>
+                    </div>
+                </div> --}}
             </div>
-        </div>
-        <ul class="nav nav-tabs nav-justified mt-3">
-            <li class="nav-item">
-                <a class="nav-link text-muted active" href="{{ route('users.show', ['name' => $user->name]) }}">
-                    記事
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-muted" href="">
-                    いいね
-                </a>
-            </li>
-        </ul>
-        @foreach($articles as $article)
-            <div class='card mt-3'>
-                <div class='card-body d-flex flex-row'>
+            <ul class="nav nav-tabs nav-justified mt-3">
+                <li class="nav-item">
+                    <a class="nav-link text-muted active" href="{{ route('users.show', ['name' => $user->name]) }}">
+                        記事
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-muted" href="">
+                        いいね
+                    </a>
+                </li>
+            </ul>
+            @foreach($articles as $article)
+            <div class='card mt-5 col-10 mr-auto ml-auto p-0'>
+                <div class='card-body d-flex flex-row align-items-center mt-3 ml-3'>
                     <i class="fas fa-file-alt fa-3x mr-3"></i>
                     <div>
-                        <div class='font-weight-bold'>
+                        <h5 class='font-weight-bold'>
                             {{ $article->user->name }}
-                        </div>
-                        <div class='font-weight-lighter'>
-                            {{ $article->created_at->format('Y/m/d') }}
+                        </h5>
+                        <div>
+                            <i class="far fa-clock pr-1"></i>{{ $article->created_at->format('Y/m/d') }}
                         </div>
                     </div>
 
@@ -64,11 +69,11 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a href="{{ route('articles.edit', ['article' => $article]) }}" class="dropdown-item">
-                                        <i class="fas fa-pen mr-1"></i>編集
+                                        <i class="fas fa-pen mr-1"></i>編集する
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item text-danger" data-toggle="modal" data-target="#modal-delete-{{ $article->id }}">
-                                        <i class="fas fa-trash-alt mr-1"></i>削除
+                                        <i class="fas fa-trash-alt mr-1"></i>削除する
                                     </a>
                                 </div>
                             </div>
@@ -102,20 +107,48 @@
                         </div>
                     @endif
                 </div>
-                <div class='card-body pt-0 pb-2'>
-                    <h3 class='h5 card-title'>
-                        都道府県：{{ $article->prefecture->prefecture }}
-                    </h3>
-                    <h3 class='h5 card-title'>
-                        タイプ：{{  $article->companyType->company_type }}
-                    </h3>
-                    <h3 class='h5 card-title'>
-                        選考フェーズ：{{  $article->phase->phase }}
-                    </h3>
-                    <a class='btn cyan darken-1 text-white' href="{{ route('articles.show', ['article' => $article]) }}">Read More</a>
+
+                <div class='card-body'>
+                    <div class='d-flex flex-row'>
+                        <div class="mr-3">
+                            <p class="bg cyan text-white px-3 py-2 rounded-pill">都道府県</p>
+                        </div>
+                        <div>
+                            <p class="py-2">{{ $article->prefecture->prefecture }}</p>
+                        </div>
+                    </div>
+                    <div class='d-flex flex-row'>
+                        <div class="mr-3">
+                            <p class="bg cyan text-white px-3 py-2 rounded-pill">事業形態</p>
+                        </div>
+                        <div>
+                            <p class="py-2">{{ $article->companyType->company_type }}</p>
+                        </div>
+                    </div>
+                    <div class='d-flex flex-row'>
+                        <div class="mr-3">
+                            <p class="bg cyan text-white px-3 py-2 rounded-pill">フェーズ</p>
+                        </div>
+                        <div>
+                            <p class="py-2">{{ $article->phase->phase }}</p>
+                        </div>
+                    </div>
+                    <a class='btn btn-outline-default waves-effect mt-3' href="{{ route('articles.show', ['article' => $article]) }}">詳しく見る</a>
+                </div>
+                <div class='card-body pt-0 pb-2 pl-3 mb-3 ml-3'>
+                    <div class="card-text">
+                        <article-like
+                            :initial-is-liked-by-user='@json($article->isLikedByUser(Auth::user()))'
+                            :initial-count-likes='@json($article->count_likes)'
+                            :authorized='@json(Auth::check())'
+                            endpoint="{{ route('articles.like', ['article' => $article]) }}"
+                        >
+                        </article-like>
+                    </div>
                 </div>
             </div>
-        @endforeach
+            @endforeach
+        </div>
     </div>
     @include('footer')
 @endsection

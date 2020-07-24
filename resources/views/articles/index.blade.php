@@ -5,16 +5,17 @@
 @section('content')
     @include('nav')
     <div class='container'>
+
         @foreach($articles as $article)
-            <div class='card mt-4'>
-                <div class='card-body d-flex flex-row'>
+            <div class='card mt-5 col-xs-12 col-lg-6 col-md-8 col-sm-10  mr-auto ml-auto p-0'>
+                <div class='card-body d-flex flex-row align-items-center mt-3 ml-3'>
                     <i class="fas fa-file-alt fa-3x mr-3"></i>
                     <div>
-                        <div class='font-weight-bold'>
+                        <h5 class='font-weight-bold'>
                             {{ $article->user->name }}
-                        </div>
-                        <div class='font-weight-lighter'>
-                            {{ $article->created_at->format('Y/m/d') }}
+                        </h5>
+                        <div>
+                            <i class="far fa-clock pr-1"></i>{{ $article->created_at->format('Y/m/d') }}
                         </div>
                     </div>
 
@@ -28,11 +29,11 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a href="{{ route('articles.edit', ['article' => $article]) }}" class="dropdown-item">
-                                        <i class="fas fa-pen mr-1"></i>編集
+                                        <i class="fas fa-pen mr-1"></i>編集する
                                     </a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item text-danger" data-toggle="modal" data-target="#modal-delete-{{ $article->id }}">
-                                        <i class="fas fa-trash-alt mr-1"></i>削除
+                                        <i class="fas fa-trash-alt mr-1"></i>削除する
                                     </a>
                                 </div>
                             </div>
@@ -65,21 +66,36 @@
                             </div>
                         </div>
                     @endif
+                </div>
 
+                <div class='card-body'>
+                    <div class='d-flex flex-row'>
+                        <div class="mr-3">
+                            <p class="bg cyan text-white px-3 py-2 rounded-pill">都道府県</p>
+                        </div>
+                        <div>
+                            <p class="py-2">{{ $article->prefecture->prefecture }}</p>
+                        </div>
+                    </div>
+                    <div class='d-flex flex-row'>
+                        <div class="mr-3">
+                            <p class="bg cyan text-white px-3 py-2 rounded-pill">事業形態</p>
+                        </div>
+                        <div>
+                            <p class="py-2">{{ $article->companyType->company_type }}</p>
+                        </div>
+                    </div>
+                    <div class='d-flex flex-row'>
+                        <div class="mr-3">
+                            <p class="bg cyan text-white px-3 py-2 rounded-pill">フェーズ</p>
+                        </div>
+                        <div>
+                            <p class="py-2">{{ $article->phase->phase }}</p>
+                        </div>
+                    </div>
+                    <a class='btn btn-outline-default waves-effect mt-3' href="{{ route('articles.show', ['article' => $article]) }}">詳しく見る</a>
                 </div>
-                <div class='card-body pt-0 pb-2'>
-                    <h3 class='h5 card-title'>
-                        都道府県：{{ $article->prefecture->prefecture }}
-                    </h3>
-                    <h3 class='h5 card-title'>
-                        タイプ：{{  $article->companyType->company_type }}
-                    </h3>
-                    <h3 class='h5 card-title'>
-                        選考フェーズ：{{  $article->phase->phase }}
-                    </h3>
-                    <a class='btn cyan darken-1 text-white' href="{{ route('articles.show', ['article' => $article]) }}">Read More</a>
-                </div>
-                <div class='card-body pt-0 pb-2 pl-3'>
+                <div class='card-body pt-0 pb-2 pl-3 mb-3 ml-3'>
                     <div class="card-text">
                         <article-like
                             :initial-is-liked-by-user='@json($article->isLikedByUser(Auth::user()))'
