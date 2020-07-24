@@ -13,7 +13,7 @@
                     <h2 class='h4 card-title text-center mt-5 mb-1'><span class="bg cyan darken-3 text-white py-3 px-4 rounded-pill">新規登録</span></h2>
                     <p class="mt-4">Sign Up</p>
 
-                    <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-block btn-danger my-3">
+                    <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-block btn-danger my-3 col-lg-8 col-md-9 col-sm-10 col-xs-12 mx-auto">
                         <i class="fab fa-google mr-1"></i>Googleで登録
                     </a>
 
@@ -45,12 +45,12 @@
                                 <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
                                 <small>パスワードを再入力してください</small>
                             </div>
-                            <button class="btn btn-block cyan darken-1 text-white" type="submit">
+                            <button class="btn btn-block cyan darken-3 text-white col-lg-8 col-md-9 col-sm-10 col-xs-12 mx-auto mt-3" type="submit">
                                 登録する
                             </button>
                         </form>
 
-                        <div class="my-5">
+                        <div class="mb-5 mt-3">
                             <a class="card-text" href="{{ route('login') }}">ログインはこちら</a>
                         </div>
                     </div>
