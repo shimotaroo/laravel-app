@@ -11,11 +11,15 @@ class UserController extends Controller
     public function show(string $name)
     {
         $user = User::where('name', $name)->first();
-        $articles = $user->articles->sortByDesc('created_at');
+        //投稿した記事
+        $postArticles = $user->articles->sortByDesc('created_at');
+        //いいねした記事
+        $likeArticles = $user->likes->sortByDesc('created_at');
 
         return view('users.show', [
             'user' => $user,
-            'articles' => $articles,
+            'postArticles' => $postArticles,
+            'likeArticles' => $likeArticles,
         ]);
     }
 }
