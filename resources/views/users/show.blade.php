@@ -29,11 +29,11 @@
                 <ul class="nav nav-tabs nav-justified md-tabs" id="myTabJust" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="post-articles-tab-just" data-toggle="tab" href="#post-articles-just" role="tab" aria-controls="post-articles-just"
-                        aria-selected="true">Home</a>
+                        aria-selected="true">自分の投稿</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" id="like-articles-tab-just" data-toggle="tab" href="#like-articles-just" role="tab" aria-controls="like-articles-just"
-                        aria-selected="false">Profile</a>
+                        aria-selected="false">いいねした投稿</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContentJust">
