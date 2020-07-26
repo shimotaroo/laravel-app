@@ -5,16 +5,17 @@
 @section('content')
     @include('nav')
     <div class="row">
-        <div class="container col-lg-6 col-md-8 col-sm-10 col-xs-12 mx-auto">
+        <div class="container col-lg-6 col-md-8 col-sm-10 col-xs-11 mx-auto">
             <div class="card mt-5">
                 <div class="card-body text-center">
                     <h2 class='h4 card-title text-center mt-5 mb-1'><span class="bg cyan darken-3 text-white py-3 px-4 rounded-pill">マイページ</span></h2>
                     <p class="mt-4">My Page</p>
                 </div>
+
                 <div class="card-body d-flex flex-row align-items-center mt-2 mb-3">
                     <div class="ml-4">
                         <a href="{{ route('users.show', ['name' => $user->name]) }}" class="text-dark">
-                            <i class="fas fa-user-circle fa-3x"></i>
+                            <img src="{{ asset('storage/'.$user->image) }}" alt="Contact Person" class="img-fuild rounded-circle" width="60" height="60">
                         </a>
                     </div>
                     <h2 class="h5 card-title ml-3 mb-0">
@@ -22,6 +23,9 @@
                             {{ $user->name }}
                         </a>
                     </h2>
+                    <div class="ml-auto">
+                        <a class='btn btn-outline-default waves-effect' href="{{ route('users.edit', ['name' => $user->name]) }}">編集</a>
+                    </div>
                 </div>
             </div>
             <div class="card mt-5 pb-5">
@@ -42,7 +46,7 @@
                         @foreach($postArticles as $postArticle)
                         <div class='card mt-5 col-10 mr-auto ml-auto p-0'>
                             <div class='card-body d-flex flex-row align-items-center mt-3 ml-3'>
-                                <i class="fas fa-file-alt fa-3x mr-3"></i>
+                                <img src="{{ asset('storage/'.$user->image) }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
                                 <div>
                                     <h5 class='font-weight-bold'>
                                         {{ $postArticle->user->name }}
@@ -147,7 +151,7 @@
                         @foreach($likeArticles as $likeArticle)
                         <div class='card mt-5 col-10 mr-auto ml-auto p-0'>
                             <div class='card-body d-flex flex-row align-items-center mt-3 ml-3'>
-                                <i class="fas fa-file-alt fa-3x mr-3"></i>
+                                <img src="{{ asset('storage/'.$user->image) }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
                                 <div>
                                     <h5 class='font-weight-bold'>
                                         {{ $likeArticle->user->name }}

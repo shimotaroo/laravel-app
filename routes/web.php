@@ -33,6 +33,10 @@ Route::resource('/articles', 'ArticleController')->only(['show']);
 //ユーザーページ表示
 Route::prefix('users')->name('users.')->group(function(){
     Route::get('/{name}', 'UserController@show')->name('show');
+    //プロフィール編集画面
+    Route::get('/{name}/edit', 'UserController@edit')->name('edit');
+    //プロフィール編集処理
+    Route::patch('/{name}/update', 'UserController@update')->name('update');
 });
 
 //いいね機能

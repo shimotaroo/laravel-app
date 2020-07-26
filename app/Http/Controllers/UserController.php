@@ -22,4 +22,14 @@ class UserController extends Controller
             'likeArticles' => $likeArticles,
         ]);
     }
+
+    //プロフィール編集画面
+    public function edit(string $name)
+    {
+        $user = User::where('name', $name)->first();
+
+        return view('users.edit', ['user' => $user]);
+    }
+
+    //プロフィール編集処理
 }
