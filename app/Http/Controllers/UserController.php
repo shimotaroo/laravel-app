@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
 {
@@ -22,4 +23,47 @@ class UserController extends Controller
             'likeArticles' => $likeArticles,
         ]);
     }
+
+    //プロフィール編集画面
+    public function edit(string $name)
+    {
+        $user = User::where('name', $name)->first();
+
+        return view('users.edit', ['user' => $user]);
+    }
+
+    //プロフィール編集処理
+    public function update(Request $request, string $name)
+    {
+
+        $user = User::where('name', $name)->first();
+        $allRequest = $request->all();
+
+        $profileImage = $request->file('image');
+        // dd($profileImage);
+        if ($profileImage) {
+            $allRequest['image'] = $this->saveProfileImage($profileImage, $user->id);
+        }
+
+        $user->fill($allRequest)->save();
+        return redirect()->route('users.show', ["name" => $user->name]);
+    }
+
+    //画像の名前変更、storageに保存
+    public function saveProfileImage($profileImage, $id)
+    {
+        //インスタンス取得
+        $image = \Image::make($profileImage);
+        //リサイズ
+        $image->fit(80, 80, function($constraint){
+            $constraint->upsize();
+        });
+        //保存
+        $fileName = 'profile_'.$id.'.'.$profileImage->getClientOriginalExtension();
+        $savePath = 'storage/'.$fileName;
+        $image->save($savePath);
+
+        return $fileName;
+    }
 }
+

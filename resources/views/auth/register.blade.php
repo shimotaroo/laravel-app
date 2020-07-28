@@ -36,7 +36,7 @@
                                 <input type="text" class="form-control" id="email" name="email" required value="{{ old('email') }}">
                             </div>
                             <div class="md-form">
-                                <label for="password">パスワード</label>
+                                <label for="password">パスワード ※1度設定すると変更できません</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                                 <small>8文字以上で入力してください</small>
                             </div>
