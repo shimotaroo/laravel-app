@@ -108,6 +108,9 @@
                 </div>
             </div>
         @endforeach
+        <div class="mt-5 mb-3 d-flex justify-content-center">
+            {{ $articles->links() }}
+        </div>
     </div>
     @include('footer')
 @endsection

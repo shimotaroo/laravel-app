@@ -18,7 +18,7 @@ class ArticleController extends Controller
     public function index()
     {
         // $articles = Article::with(['prefecture', 'companyType', 'phase'])->get();
-        $articles = Article::all();
+        $articles = Article::paginate(10);
         return view('articles.index', ['articles' => $articles]);
     }
 
