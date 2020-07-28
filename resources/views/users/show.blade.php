@@ -24,7 +24,7 @@
                         </a>
                     </h2>
                     <div class="ml-auto">
-                        <a class='btn btn-outline-default waves-effect' href="{{ route('users.edit', ['name' => $user->name]) }}">編集</a>
+                        <a class='btn btn-amber rounded-pill waves-effect' href="{{ route('users.edit', ['name' => $user->name]) }}">編集</a>
                     </div>
                 </div>
             </div>
@@ -32,11 +32,11 @@
                 {{-- タブ --}}
                 <ul class="nav nav-tabs nav-justified md-tabs" id="myTabJust" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="post-articles-tab-just" data-toggle="tab" href="#post-articles-just" role="tab" aria-controls="post-articles-just"
+                        <a class="nav-link active text-dark" id="post-articles-tab-just" data-toggle="tab" href="#post-articles-just" role="tab" aria-controls="post-articles-just"
                         aria-selected="true">自分の投稿</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="like-articles-tab-just" data-toggle="tab" href="#like-articles-just" role="tab" aria-controls="like-articles-just"
+                        <a class="nav-link text-dark" id="like-articles-tab-just" data-toggle="tab" href="#like-articles-just" role="tab" aria-controls="like-articles-just"
                         aria-selected="false">いいねした投稿</a>
                     </li>
                 </ul>
