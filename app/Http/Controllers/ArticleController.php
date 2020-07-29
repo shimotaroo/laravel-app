@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Http\Requests\ArticleRequest;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
@@ -17,16 +19,23 @@ class ArticleController extends Controller
 
     public function index()
     {
-        // $articles = Article::with(['prefecture', 'companyType', 'phase'])->get();
         $articles = Article::all();
-        return view('articles.index', ['articles' => $articles]);
+        $user = User::where('id', Auth::id())->first();
+        return view('articles.index', [
+            'articles' => $articles,
+            'user' => $user,
+        ]);
     }
 
     //投稿画面
     public function create()
     {
         $article = null;
-        return view('articles.create', ['article' => $article]);
+        $user = User::where('id', Auth::id())->first();
+        return view('articles.create', [
+            'article' => $article,
+            'user' => $user,
+        ]);
     }
 
     //投稿処理
