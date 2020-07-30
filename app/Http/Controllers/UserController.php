@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -33,7 +34,7 @@ class UserController extends Controller
     }
 
     //プロフィール編集処理
-    public function update(Request $request, string $name)
+    public function update(UserRequest $request, string $name)
     {
 
         $user = User::where('name', $name)->first();
@@ -64,6 +65,14 @@ class UserController extends Controller
         $image->save($savePath);
 
         return $fileName;
+    }
+
+    //パスワード編集画面
+    public function editPassword(string $name)
+    {
+        $user = User::where('name', $name)->first();
+
+        return view('users.password_edit', ['user' => $user]);
     }
 }
 
