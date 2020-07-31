@@ -16,14 +16,15 @@
                     @include('error_card_list')
 
                     <div class="card-text mt-5">
-                        <form method="POST" action="{{ route('users.password.update') }}">
+                        <form method="POST" action="{{ route('users.password.update', ['name' => $user->name]) }}">
+                            @method('PATCH')
                             @csrf
 
                             {{-- <input type="hidden" name="email" value={{ $email }}>
                             <input type="hidden" name="token" value={{ $token }}> --}}
                             <div class="md-form col-lg-8 col-md-9 col-sm-10 col-xs-12 mx-auto mt-3">
                                 <label for="old_password">現在のパスワード</label>
-                                <input type="password" class="form-control" id="old_password" name="old_password" required>
+                                <input type="password" class="form-control" id="old_password" name="current_password" required>
                                 <small>ご登録のパスワードを入力ください</small>
                             </div>
                             <div class="md-form col-lg-8 col-md-9 col-sm-10 col-xs-12 mx-auto mt-3">

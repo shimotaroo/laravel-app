@@ -13,7 +13,6 @@
                 </div>
 
                 @include('error_card_list')
-
                 <div class="mt-2">
                         <div class="card-body align-items-center text-center mt-2 mb-3">
                             <form action="{{ route('users.update', ['name' => $user->name]) }}" method="POST" enctype="multipart/form-data">
