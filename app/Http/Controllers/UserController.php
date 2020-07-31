@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -33,14 +36,13 @@ class UserController extends Controller
     }
 
     //プロフィール編集処理
-    public function update(Request $request, string $name)
+    public function update(UserRequest $request, string $name)
     {
 
         $user = User::where('name', $name)->first();
         $allRequest = $request->all();
 
         $profileImage = $request->file('image');
-        // dd($profileImage);
         if ($profileImage) {
             $allRequest['image'] = $this->saveProfileImage($profileImage, $user->id);
         }
@@ -64,6 +66,49 @@ class UserController extends Controller
         $image->save($savePath);
 
         return $fileName;
+    }
+
+    //パスワード編集画面
+    public function editPassword(string $name)
+    {
+        $user = User::where('name', $name)->first();
+
+        return view('users.password_edit', ['user' => $user]);
+    }
+
+    //パスワード編集処理
+    public function updatePassword(Request $request, string $name)
+    {
+        $user = User::where('name', $name)->first();
+
+        // dd((Hash::check($request->current_password, $user->password)));
+
+        //現在のパスワードが合っているかチェック
+        if(!(Hash::check($request->current_password, $user->password)))
+        {
+            return redirect()->back()
+                ->withInput()->withErrors(['current_password' => '現在のパスワードが違います']);
+        }
+
+        //現在のパスワードと新しいパスワードが違うかチェック
+        if($request->current_password === $request->password)
+        {
+            return redirect()->back()
+                ->withInput()->withErrors(['password' => '現在のパスワードと新しいパスワードが変わっていません']);
+        }
+
+        $this->passwordValidator($request->all())->validate();
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect()->route('users.show', ["name" => $user->name]);
+    }
+
+    public function passwordValidator(array $data)
+    {
+        return Validator::make($data, [
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
     }
 }
 

@@ -37,6 +37,10 @@ Route::prefix('users')->name('users.')->group(function(){
     Route::get('/{name}/edit', 'UserController@edit')->name('edit');
     //プロフィール編集処理
     Route::patch('/{name}/update', 'UserController@update')->name('update');
+    //パスワード編集画面
+    Route::get('/{name}/password/edit', 'UserController@editPassword')->name('password.edit');
+    //パスワード編集処理
+    Route::patch('/{name}/password/update', 'UserController@updatePassword')->name('password.update');
 });
 
 //いいね機能
