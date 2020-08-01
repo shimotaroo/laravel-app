@@ -19,12 +19,24 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $articles = Article::paginate(10);
+        $articles = Article::orderBy('created_at', 'desc')->paginate(3);
         $user = User::where('id', Auth::id())->first();
         return view('articles.index', [
             'articles' => $articles,
             'user' => $user,
         ]);
+    }
+
+    public function sort(string $sortType)
+    {
+        $user = User::where('id', Auth::id())->first();
+        $Article = new Article;
+        $data = [
+            'articles' => $Article->order($sortType),
+            'user' => $user,
+            'sortType' => $sortType,
+        ];
+        return view('articles.index', $data);
     }
 
     //投稿画面
