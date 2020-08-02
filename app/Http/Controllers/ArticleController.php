@@ -21,22 +21,19 @@ class ArticleController extends Controller
     {
         $articles = Article::orderBy('created_at', 'desc')->paginate(3);
         $user = User::where('id', Auth::id())->first();
+
+        //検索用のラジオボタン用のデータ
+        $prefecture = config('forSerchByPrefecture');
+        $companyType = config('forSerchByCompanyType');
+        $phase = config('forSerchByPhase');
+
         return view('articles.index', [
             'articles' => $articles,
             'user' => $user,
+            'prefecture' => $prefecture,
+            'companyType' => $companyType,
+            'phase' => $phase,
         ]);
-    }
-
-    public function sort(string $sortType)
-    {
-        $user = User::where('id', Auth::id())->first();
-        $Article = new Article;
-        $data = [
-            'articles' => $Article->order($sortType),
-            'user' => $user,
-            'sortType' => $sortType,
-        ];
-        return view('articles.index', $data);
     }
 
     //投稿画面
@@ -105,5 +102,69 @@ class ArticleController extends Controller
             'id' => $article->id,
             'countLikes' => $article->count_likes,
         ];
+    }
+
+    //記事一覧ページでの並び替え機能
+    public function sort(string $sortType)
+    {
+        $user = User::where('id', Auth::id())->first();
+        $Article = new Article;
+
+        //検索用のラジオボタン用のデータ
+        $prefecture = config('forSerchByPrefecture');
+        $companyType = config('forSerchByCompanyType');
+        $phase = config('forSerchByPhase');
+
+        $data = [
+            'articles' => $Article->sortByselectedSortType($sortType),
+            'user' => $user,
+            'sortType' => $sortType,
+            'prefecture' => $prefecture,
+            'companyType' => $companyType,
+            'phase' => $phase,
+        ];
+        return view('articles.index', $data);
+    }
+
+    public function serch(Request $request)
+    {
+        $query = Article::query();
+        $user = User::where('id', Auth::id())->first();
+        //検索用のラジオボタン用のデータ
+        $prefecture = config('forSerchByPrefecture');
+        $companyType = config('forSerchByCompanyType');
+        $phase = config('forSerchByPhase');
+
+        $prefectureRequest = $request->prefecture_id;
+        $companyTypeRequest = $request->company_type_id;
+        $phaseRequest = $request->phase_id;
+
+        // $serch = "";
+
+        if($prefectureRequest !== "0") {
+            $query->where('prefecture_id', $prefectureRequest);
+            // $serch .= 'prefecture';
+        }
+
+        if($companyTypeRequest !== "0") {
+            $query->where('company_type_id', $companyTypeRequest);
+            // $serch .= 'companyType';
+        }
+
+        if($phaseRequest !== "0") {
+            $query->where('phase_id', $phaseRequest);
+            // $serch .= 'phase';
+
+        }
+
+        $articles = $query->orderBy('created_at', 'desc')->paginate(3);
+        return view('articles.index', [
+            'articles' => $articles,
+            'user' => $user,
+            'prefecture' => $prefecture,
+            'companyType' => $companyType,
+            'phase' => $phase,
+            // 'serch' => $serch,
+        ]);
     }
 }

@@ -52,3 +52,6 @@ Route::prefix('articles')->name('articles.')->group(function() {
 
 //並び替え
 Route::get('/{sortType}', 'ArticleController@sort')->name('articles.sort');
+
+//検索機能
+Route::post('/serch', 'ArticleController@serch')->name('articles.serch');
