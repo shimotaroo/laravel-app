@@ -6,6 +6,20 @@
     @include('nav')
     <div class='container'>
 
+        {{-- <form action="{{ route('articles.sort', ['sortType' => $sortType]) }}" method="GET">
+            @csrf
+            <button type="submit" name="sortType" value="created_at_desc" class="btn btn-block cyan darken-3 text-white mt-4 mb-2 col-lg-5 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4">
+                新しい順
+            </button>
+            <button type="submit" name="sortType" value="created_at_asc" class="btn btn-block cyan darken-3 text-white mt-4 mb-2 col-lg-5 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4">
+                古い順
+            </button>
+            <button type="submit" name="sortType" value="like_count" class="btn btn-block cyan darken-3 text-white mt-4 mb-2 col-lg-5 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4">
+                いいね数順
+            </button>
+        </form> --}}
+        <a class='btn btn-amber col-lg-8 col-md-9 col-sm-10 col-xs-12 mx-auto mt-3 mb-5 waves-effect waves-effect' href="{{ route('articles.sort', ['sortType' => 'like_count']) }}">パスワード変更はこちら</a>
+
         @foreach($articles as $article)
             <div class='card mt-5 col-xs-12 col-lg-6 col-md-8 col-sm-10  mr-auto ml-auto p-0'>
                 <div class='card-body d-flex flex-row align-items-center mt-3 ml-3'>
@@ -109,7 +123,11 @@
             </div>
         @endforeach
         <div class="mt-5 mb-3 d-flex justify-content-center">
-            {{ $articles->links() }}
+            @if(isset($sortType))
+                {{ $articles->appends($sortType)->links() }}
+            @else
+                {{ $articles->links() }}
+            @endif
         </div>
     </div>
     @include('footer')
