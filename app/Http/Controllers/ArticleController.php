@@ -135,36 +135,34 @@ class ArticleController extends Controller
         $companyType = config('forSerchByCompanyType');
         $phase = config('forSerchByPhase');
 
-        $prefectureRequest = $request->prefecture_id;
-        $companyTypeRequest = $request->company_type_id;
-        $phaseRequest = $request->phase_id;
+        $prefectureRequest = $request->pref;
+        // $companyTypeRequest = $request->companyType;
+        // $phaseRequest = $request->phase;
 
-        // $serch = "";
+        // if($prefectureRequest !== "0") {
+        //     $query->where('prefecture_id', $prefectureRequest);
+        // }
 
-        if($prefectureRequest !== "0") {
-            $query->where('prefecture_id', $prefectureRequest);
-            // $serch .= 'prefecture';
-        }
+        // if($companyTypeRequest !== "0") {
+        //     $query->where('company_type_id', $companyTypeRequest);
+        // }
 
-        if($companyTypeRequest !== "0") {
-            $query->where('company_type_id', $companyTypeRequest);
-            // $serch .= 'companyType';
-        }
+        // if($phaseRequest !== "0") {
+        //     $query->where('phase_id', $phaseRequest);
+        // }
 
-        if($phaseRequest !== "0") {
-            $query->where('phase_id', $phaseRequest);
-            // $serch .= 'phase';
+        $articles = Article::paginate(3);
 
-        }
-
-        $articles = $query->orderBy('created_at', 'desc')->paginate(3);
         return view('articles.index', [
             'articles' => $articles,
             'user' => $user,
             'prefecture' => $prefecture,
             'companyType' => $companyType,
             'phase' => $phase,
-            // 'serch' => $serch,
+            'pref' => $prefectureRequest,
+            // 'prefectureRequest' => $prefectureRequest,
+            // 'companyTypeRequest' => $companyTypeRequest,
+            // 'phaseRequest' => $phaseRequest,
         ]);
     }
 }
