@@ -54,4 +54,4 @@ Route::prefix('articles')->name('articles.')->group(function() {
 Route::get('/{sortType}', 'ArticleController@sort')->name('articles.sort');
 
 //検索機能
-Route::get('/serch', 'ArticleController@serch')->name('articles.serch');
+Route::get('/article/search', 'ArticleController@search')->name('articles.search');

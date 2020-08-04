@@ -14,15 +14,15 @@
         </div>
         {{-- 記事一覧並び替え --}}
 
-    <form action="{{ route('articles.serch') }}" method="GET">
+    <form action="{{ route('articles.search') }}" method="GET">
     {{-- @csrf --}}
         <div class="mb-4 col-lg-5 col-md-6 col-sm-8 col-xs-10 mx-auto row align-items-center ">
                 <span class="col-3 text-center bg cyan text-white px-3 py-2 rounded-pill">都道府県</span>
                 <div class="col-9 text-left py-2 ">
-                    <div class="form-check form-check-inline">
+                    {{-- <div class="form-check form-check-inline">
                         <input type="radio" name='pref' id="prefecture0" class='form-check-input' value=0 checked>
                         <label class="form-check-label" for="prefecture0">指定なし</label>
-                    </div>
+                    </div> --}}
                     @foreach ($prefecture as $id => $prefectureName)
                         <div class="form-check form-check-inline">
                             <input type="radio" name='pref' id="prefecture{{ $id }}" class='form-check-input' value={{ $id }}>
@@ -170,13 +170,13 @@
                     </div>
                 </div>
             </div>
-        @endforeach --}}
+        @endforeach
         <div class="mt-5 mb-3 d-flex justify-content-center">
             @if(isset($sortType))
                 {{ $articles->appends($sortType)->links() }}
-            {{-- @elseif(isset($request))
-                {{ $articles->appends($request)->links() }} --}}
-            @else --}}
+            {{-- {{-- @elseif(isset($prefSerch))
+                {{ $articles->appends($prefSerch)->links() }} --}}
+            @else
                 {{ $articles->links() }}
             @endif
         </div>

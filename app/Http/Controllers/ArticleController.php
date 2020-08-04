@@ -126,19 +126,19 @@ class ArticleController extends Controller
         return view('articles.index', $data);
     }
 
-    public function serch(Request $request)
+    public function search(Request $request)
     {
-        $query = Article::query();
-        $user = User::where('id', Auth::id())->first();
-        //検索用のラジオボタン用のデータ
-        $prefecture = config('forSerchByPrefecture');
-        $companyType = config('forSerchByCompanyType');
-        $phase = config('forSerchByPhase');
+        dd($request->input());
 
-        $prefectureRequest = $request->pref;
-        // $companyTypeRequest = $request->companyType;
-        // $phaseRequest = $request->phase;
+        // $query = Article::query();
+        // $user = User::where('id', Auth::id())->first();
+        // //検索用のラジオボタン用のデータ
+        // $prefecture = config('forSerchByPrefecture');
+        // $companyType = config('forSerchByCompanyType');
+        // $phase = config('forSerchByPhase');
 
+        // $prefSerch = $request->input('pref');
+        // $query->where('prefecture_id', $prefSerch)->get();
         // if($prefectureRequest !== "0") {
         //     $query->where('prefecture_id', $prefectureRequest);
         // }
@@ -151,18 +151,21 @@ class ArticleController extends Controller
         //     $query->where('phase_id', $phaseRequest);
         // }
 
-        $articles = Article::paginate(3);
+        // $articles = $query->get();
 
-        return view('articles.index', [
-            'articles' => $articles,
-            'user' => $user,
-            'prefecture' => $prefecture,
-            'companyType' => $companyType,
-            'phase' => $phase,
-            'pref' => $prefectureRequest,
+        // $articles = $query->paginate(3);
+
+        // return view('articles.index', [
+        //     'articles' => $articles,
+        //     'user' => $user,
+        //     'prefecture' => $prefecture,
+        //     'companyType' => $companyType,
+        //     'phase' => $phase,
+        //     'pref' => $prefSerch,
+            // 'pref' => $prefectureRequest,
             // 'prefectureRequest' => $prefectureRequest,
             // 'companyTypeRequest' => $companyTypeRequest,
             // 'phaseRequest' => $phaseRequest,
-        ]);
+        // ]);
     }
 }
