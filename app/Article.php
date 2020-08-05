@@ -56,4 +56,16 @@ class Article extends Model
     {
         return $this->likes->count();
     }
+
+    //記事一覧ページで並び替え処理
+    public function sortByselectedSortType($sortType)
+    {
+        if ($sortType === 'desc') {
+            return $this->orderBy('created_at', 'desc')->paginate(3);
+        } elseif ($sortType === 'asc') {
+            return $this->orderBy('created_at', 'asc')->paginate(3);
+        } elseif ($sortType === 'like_count') {
+            return $this->withCount('likes')->orderBy('likes_count', 'desc')->paginate(3);
+        }
+    }
 }

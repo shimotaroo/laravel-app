@@ -6,19 +6,65 @@
     @include('nav')
     <div class='container'>
 
-        {{-- <form action="{{ route('articles.sort', ['sortType' => $sortType]) }}" method="GET">
-            @csrf
-            <button type="submit" name="sortType" value="created_at_desc" class="btn btn-block cyan darken-3 text-white mt-4 mb-2 col-lg-5 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4">
-                新しい順
+        {{-- 記事一覧並び替え --}}
+        <div class="d-flex justify-content-around col-lg-6 col-md-8 col-sm-10 col-xs-12 mx-auto mt-5">
+            <a class='col-4 btn btn-amber waves-effect waves-effect rounded-pill' href="{{ route('articles.sort', ['sortType' => 'desc']) }}">新しい順</a>
+            <a class='col-4 btn btn-amber waves-effect waves-effect rounded-pill' href="{{ route('articles.sort', ['sortType' => 'asc']) }}">古い順</a>
+            <a class='col-4 btn btn-amber waves-effect waves-effect rounded-pill' href="{{ route('articles.sort', ['sortType' => 'like_count']) }}">いいね数順</a>
+        </div>
+        {{-- 記事一覧並び替え --}}
+
+    <form action="{{ route('articles.search') }}" method="GET">
+        <div class="mb-4 col-lg-5 col-md-6 col-sm-8 col-xs-10 mx-auto row align-items-center ">
+                <span class="col-3 text-center bg cyan text-white px-3 py-2 rounded-pill">都道府県</span>
+                <div class="col-9 text-left py-2 ">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name='prefectureSearch' id="prefecture0" class='form-check-input' value=0 checked>
+                        <label class="form-check-label" for="prefecture0">指定なし</label>
+                    </div>
+                    @foreach ($prefecture as $id => $prefectureName)
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name='prefectureSearch' id="prefecture{{ $id }}" class='form-check-input' value={{ $id }}>
+                            <label class="form-check-label" for="prefecture{{ $id }}">{{ $prefectureName }}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="mb-4 col-lg-5 col-md-6 col-sm-8 col-xs-10 mx-auto row align-items-center ">
+                <span class="col-3 text-center bg cyan text-white px-3 py-2 rounded-pill">事業形態</span>
+                <div class="col-9 text-left">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name='companySearch' id="company0" class='form-check-input' value=0 checked>
+                        <label class="form-check-label" for="company0">指定なし</label>
+                    </div>
+                    @foreach ($companyType as $id => $type)
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name='companySearch' id="company{{ $id }}" class='form-check-input' value={{ $id }}>
+                            <label class="form-check-label" for="company{{ $id }}">{{ $type }}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="mb-4 col-lg-5 col-md-6 col-sm-8 col-xs-10 mx-auto row align-items-center ">
+                <span class="col-3 text-center bg cyan text-white px-3 py-2 rounded-pill">フェーズ</span>
+                <div class="col-9 text-left">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name='phaseSearch' id="phase0" class='form-check-input' value=0 checked>
+                        <label class="form-check-label" for="phase0">指定なし</label>
+                    </div>
+                    @foreach ($phase as $id => $phaseType)
+                        <div class="form-check form-check-inline">
+                            <input type="radio" name='phaseSearch' id="phase{{ $id }}" class='form-check-input' value={{ $id }}>
+                            <label class="form-check-label" for="phase{{ $id }}">{{ $phaseType }}</label>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <button type="submit" class="btn btn-block cyan darken-3 text-white mt-4 mb-2 col-lg-5 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4">
+                検索する
             </button>
-            <button type="submit" name="sortType" value="created_at_asc" class="btn btn-block cyan darken-3 text-white mt-4 mb-2 col-lg-5 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4">
-                古い順
-            </button>
-            <button type="submit" name="sortType" value="like_count" class="btn btn-block cyan darken-3 text-white mt-4 mb-2 col-lg-5 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4">
-                いいね数順
-            </button>
-        </form> --}}
-        <a class='btn btn-amber col-lg-8 col-md-9 col-sm-10 col-xs-12 mx-auto mt-3 mb-5 waves-effect waves-effect' href="{{ route('articles.sort', ['sortType' => 'like_count']) }}">パスワード変更はこちら</a>
+        </form>
+
 
         @foreach($articles as $article)
             <div class='card mt-5 col-xs-12 col-lg-6 col-md-8 col-sm-10  mr-auto ml-auto p-0'>
@@ -125,6 +171,8 @@
         <div class="mt-5 mb-3 d-flex justify-content-center">
             @if(isset($sortType))
                 {{ $articles->appends($sortType)->links() }}
+            @elseif(isset($searchConditions))
+                {{ $articles->appends(request()->input())->links() }}
             @else
                 {{ $articles->links() }}
             @endif
