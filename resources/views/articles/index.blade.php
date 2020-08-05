@@ -15,54 +15,51 @@
         {{-- 記事一覧並び替え --}}
 
     <form action="{{ route('articles.search') }}" method="GET">
-    {{-- @csrf --}}
         <div class="mb-4 col-lg-5 col-md-6 col-sm-8 col-xs-10 mx-auto row align-items-center ">
                 <span class="col-3 text-center bg cyan text-white px-3 py-2 rounded-pill">都道府県</span>
                 <div class="col-9 text-left py-2 ">
-                    {{-- <div class="form-check form-check-inline">
-                        <input type="radio" name='pref' id="prefecture0" class='form-check-input' value=0 checked>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name='prefectureSearch' id="prefecture0" class='form-check-input' value=0 checked>
                         <label class="form-check-label" for="prefecture0">指定なし</label>
-                    </div> --}}
+                    </div>
                     @foreach ($prefecture as $id => $prefectureName)
                         <div class="form-check form-check-inline">
-                            <input type="radio" name='pref' id="prefecture{{ $id }}" class='form-check-input' value={{ $id }}>
+                            <input type="radio" name='prefectureSearch' id="prefecture{{ $id }}" class='form-check-input' value={{ $id }}>
                             <label class="form-check-label" for="prefecture{{ $id }}">{{ $prefectureName }}</label>
                         </div>
                     @endforeach
                 </div>
             </div>
-
-            {{-- <div class="mb-4 col-lg-5 col-md-6 col-sm-8 col-xs-10 mx-auto row align-items-center ">
+            <div class="mb-4 col-lg-5 col-md-6 col-sm-8 col-xs-10 mx-auto row align-items-center ">
                 <span class="col-3 text-center bg cyan text-white px-3 py-2 rounded-pill">事業形態</span>
                 <div class="col-9 text-left">
                     <div class="form-check form-check-inline">
-                        <input type="radio" name='companyType' id="company0" class='form-check-input' value=0 checked>
+                        <input type="radio" name='companySearch' id="company0" class='form-check-input' value=0 checked>
                         <label class="form-check-label" for="company0">指定なし</label>
                     </div>
                     @foreach ($companyType as $id => $type)
                         <div class="form-check form-check-inline">
-                            <input type="radio" name='companyType' id="company{{ $id }}" class='form-check-input' value={{ $id }}>
+                            <input type="radio" name='companySearch' id="company{{ $id }}" class='form-check-input' value={{ $id }}>
                             <label class="form-check-label" for="company{{ $id }}">{{ $type }}</label>
                         </div>
                     @endforeach
                 </div>
             </div>
-
             <div class="mb-4 col-lg-5 col-md-6 col-sm-8 col-xs-10 mx-auto row align-items-center ">
                 <span class="col-3 text-center bg cyan text-white px-3 py-2 rounded-pill">フェーズ</span>
                 <div class="col-9 text-left">
                     <div class="form-check form-check-inline">
-                        <input type="radio" name='phase' id="phase0" class='form-check-input' value=0 checked>
+                        <input type="radio" name='phaseSearch' id="phase0" class='form-check-input' value=0 checked>
                         <label class="form-check-label" for="phase0">指定なし</label>
                     </div>
                     @foreach ($phase as $id => $phaseType)
                         <div class="form-check form-check-inline">
-                            <input type="radio" name='phase' id="phase{{ $id }}" class='form-check-input' value={{ $id }}>
+                            <input type="radio" name='phaseSearch' id="phase{{ $id }}" class='form-check-input' value={{ $id }}>
                             <label class="form-check-label" for="phase{{ $id }}">{{ $phaseType }}</label>
                         </div>
                     @endforeach
                 </div>
-            </div> --}}
+            </div>
             <button type="submit" class="btn btn-block cyan darken-3 text-white mt-4 mb-2 col-lg-5 col-md-6 col-sm-7 col-xs-8 mx-auto mb-4">
                 検索する
             </button>
@@ -174,8 +171,8 @@
         <div class="mt-5 mb-3 d-flex justify-content-center">
             @if(isset($sortType))
                 {{ $articles->appends($sortType)->links() }}
-            {{-- {{-- @elseif(isset($prefSerch))
-                {{ $articles->appends($prefSerch)->links() }} --}}
+            @elseif(isset($searchConditions))
+                {{ $articles->appends(request()->input())->links() }}
             @else
                 {{ $articles->links() }}
             @endif

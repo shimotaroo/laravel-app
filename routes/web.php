@@ -50,8 +50,8 @@ Route::prefix('articles')->name('articles.')->group(function() {
     Route::delete('/{article}/like', 'ArticleController@unlike')->name('unlike')->middleware('auth');
 });
 
+//検索機能
+Route::get('/search', 'ArticleController@search')->name('articles.search');
+
 //並び替え
 Route::get('/{sortType}', 'ArticleController@sort')->name('articles.sort');
-
-//検索機能
-Route::get('/article/search', 'ArticleController@search')->name('articles.search');
