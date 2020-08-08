@@ -18,7 +18,10 @@
                     <div class="card-text">
                         <form method="POST" action="{{ route('register.{provider}', ['provider' => $provider]) }}">
                             @csrf
-                            <input type="hidden" name='token' value="{{ $token }}">
+                            <input type="hidden" name='token' value="{{ $token }}">　
+                            @if ( $provider === 'twitter')
+                                <input type="hidden" name='tokenSecret' value="{{ $tokenSecret }}">　
+                            @endif
                             <div class="md-form">
                                 <label for="name">ユーザー名</label>
                                 <input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}">

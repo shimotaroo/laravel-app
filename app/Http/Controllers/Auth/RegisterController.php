@@ -80,20 +80,21 @@ class RegisterController extends Controller
         $token = $request->token;
         $providerUser = Socialite::driver($provider);
 
+        //google
         if ($provider === 'google') {
             $providerUser = $providerUser->userFromToken($token);
-        } elseif ($provider === 'twitter') {
-            $tokenSecret = $request->tokenSecret;
-            $providerUser = $providerUser->userFromTokenAndSecret($token, $tokenSecret);
-        }
 
-        if($provider === 'google') {
             return view('auth.social_register', [
                 'provider' => $provider,
                 'email' => $providerUser->getEmail(),
                 'token' => $providerUser->token,
             ]);
-        } elseif ($provider === 'twitter')  {
+
+        //twitter
+        } elseif ($provider === 'twitter') {
+            $tokenSecret = $request->tokenSecret;
+            $providerUser = $providerUser->userFromTokenAndSecret($token, $tokenSecret);
+
             return view('auth.social_register', [
                 'provider' => $provider,
                 'email' => $providerUser->getEmail(),
@@ -107,12 +108,19 @@ class RegisterController extends Controller
     {
         //google
         if($provider === 'google') {
-
-        $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:15', 'unique:users'],
-            'age' => ['numeric', 'min:1', 'max:100', 'nullable'],
-            'token' => ['required', 'string'],
-        ]);
+            $request->validate([
+                'name' => ['required', 'string', 'min:3', 'max:15', 'unique:users'],
+                'age' => ['numeric', 'min:1', 'max:100', 'nullable'],
+                'token' => ['required', 'string'],
+            ]);
+        } elseif($provider === 'twitter') {
+            $request->validate([
+                'name' => ['required', 'string', 'min:3', 'max:15', 'unique:users'],
+                'age' => ['numeric', 'min:1', 'max:100', 'nullable'],
+                'token' => ['required', 'string'],
+                'tokenSecret' => ['required', 'string'],
+            ]);
+        }
 
         $token = $request->token;
         $providerUser = Socialite::driver($provider);

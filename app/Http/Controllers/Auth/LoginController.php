@@ -55,7 +55,6 @@ class LoginController extends Controller
         $user = User::where('email', $providerUser->getEmail())->first();
 
         if($user) {
-            dd('登録済');
             //trueでログアウトをしない限りログイン状態を維持できる
             $this->guard()->login($user, true);
             return $this->sendLoginResponse($request);
