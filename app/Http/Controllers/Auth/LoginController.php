@@ -41,7 +41,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    //Googleアカウント選択画面へリダイレクト
+    //SNSアカウント選択画面へリダイレクト
     public function redirectToProvider(string $provider)
     {
         return Socialite::driver($provider)->redirect();
@@ -61,10 +61,20 @@ class LoginController extends Controller
         }
 
         //$userがnullの場合の処理（メールアドレスを登録してない場合）
-        return redirect()->route('register.{provider}', [
-            'provider' => $provider,
-            'email' => $providerUser->getEmail(),
-            'token' => $providerUser->token,
-        ]);
+        if($provider === 'google') {
+            return redirect()->route('register.{provider}', [
+                'provider' => $provider,
+                'email' => $providerUser->getEmail(),
+                'token' => $providerUser->token,
+            ]);
+        } elseif($provider === 'twitter') {
+            return redirect()->route('register.{provider}', [
+                'provider' => $provider,
+                'email' => $providerUser->getEmail(),
+                'token' => $providerUser->token,
+                'tokenSecret' => $providerUser->tokenSecret,
+            ]);
+        }
+
     }
 }

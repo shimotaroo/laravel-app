@@ -13,8 +13,11 @@
                     <h2 class='h4 card-title text-center mt-5 mb-1'><span class="bg cyan darken-3 text-white py-3 px-4 rounded-pill">新規登録</span></h2>
                     <p class="mt-4">Sign Up</p>
 
-                    <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-block btn-danger my-3 col-lg-8 col-md-9 col-sm-10 col-xs-12 mx-auto">
+                    <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-block red darken-1 text-white mt-3 mb-2 col-lg-8 col-md-9 col-sm-10 col-xs-12 mx-auto">
                         <i class="fab fa-google mr-1"></i>Googleで登録
+                    </a>
+                    <a href="{{ route('login.{provider}', ['provider' => 'twitter']) }}" class="btn btn-block btn-info my-3 col-lg-8 col-md-9 col-sm-10 col-xs-12 mx-auto">
+                        <i class="fab fa-twitter mr-1"></i>Twitterで登録
                     </a>
 
                     @include('error_card_list')

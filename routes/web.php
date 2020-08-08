@@ -13,7 +13,8 @@
 
 //認証系のルーティングを追加
 Auth::routes();
-//Google用
+
+//Googleログイン用
 Route::prefix('login')->name('login.')->group(function(){
     Route::get('/{provider}', 'Auth\LoginController@redirectToProvider')->name('{provider}');
     Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('{provider}.callback');

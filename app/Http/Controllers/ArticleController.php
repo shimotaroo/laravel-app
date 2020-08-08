@@ -140,14 +140,13 @@ class ArticleController extends Controller
         $companySearch = $request->companySearch;
         $phaseSearch = $request->phaseSearch;
 
+        //DBからデータ取得
         if($prefectureSerch !== "0") {
             $query->where('prefecture_id', $prefectureSerch);
         }
-
         if($companySearch  !== "0") {
             $query->where('company_type_id', $companySearch );
         }
-
         if($phaseSearch !== "0") {
             $query->where('phase_id', $phaseSearch);
         }
