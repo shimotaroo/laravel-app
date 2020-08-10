@@ -131,7 +131,7 @@
                 <div class='card-body'>
                     <div class='d-flex flex-row'>
                         <div class="mr-3">
-                            <p class="bg cyan text-white px-3 py-2 rounded-pill">都道府県</p>
+                            <p class="bg orange lighten-1 text-white px-3 py-2 rounded-pill ml-4">都道府県</p>
                         </div>
                         <div>
                             <p class="py-2">{{ $article->prefecture->prefecture }}</p>
@@ -139,7 +139,7 @@
                     </div>
                     <div class='d-flex flex-row'>
                         <div class="mr-3">
-                            <p class="bg cyan text-white px-3 py-2 rounded-pill">事業形態</p>
+                            <p class="bg orange lighten-1 text-white px-3 py-2 rounded-pill ml-4">事業形態</p>
                         </div>
                         <div>
                             <p class="py-2">{{ $article->companyType->company_type }}</p>
@@ -147,13 +147,13 @@
                     </div>
                     <div class='d-flex flex-row'>
                         <div class="mr-3">
-                            <p class="bg cyan text-white px-3 py-2 rounded-pill">フェーズ</p>
+                            <p class="bg orange lighten-1 text-white px-3 py-2 rounded-pill ml-4">フェーズ</p>
                         </div>
                         <div>
                             <p class="py-2">{{ $article->phase->phase }}</p>
                         </div>
                     </div>
-                    <a class='btn btn-outline-default waves-effect mt-3' href="{{ route('articles.show', ['article' => $article]) }}">詳しく見る</a>
+                    <a class='btn grey darken-2 mt-3 text-white ml-4' href="{{ route('articles.show', ['article' => $article]) }}">詳しく見る</a>
                 </div>
                 <div class='card-body pt-0 pb-2 pl-3 mb-3 ml-3'>
                     <div class="card-text">

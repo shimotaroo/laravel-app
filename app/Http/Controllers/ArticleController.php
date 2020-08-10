@@ -59,7 +59,11 @@ class ArticleController extends Controller
     //編集画面
     public function edit(Article $article)
     {
-        return view('articles.edit', ['article' => $article]);
+        $user = User::where('id', Auth::id())->first();
+        return view('articles.edit', [
+            'article' => $article,
+            'user' => $user,
+            ]);
     }
 
     //編集処理
@@ -79,7 +83,12 @@ class ArticleController extends Controller
     //詳細画面
     public function show(Article $article)
     {
-        return view('articles.show', ['article' => $article]);
+        $user = User::where('id', Auth::id())->first();
+
+        return view('articles.show', [
+            'article' => $article,
+            'user' => $user,
+            ]);
     }
 
     //いいね機能

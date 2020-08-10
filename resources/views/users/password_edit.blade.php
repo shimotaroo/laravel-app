@@ -7,7 +7,7 @@
     @include('nav')
 
     <div class="row">
-        <div class="mx-auto col-12 col-sm-11 col-md-9 col-lg-7 col-xl-6">
+        <div class="mx-auto col-12 col-sm-11 col-md-9 col-lg-7 col-xl-6 my-5">
             <div class="card mt-5">
                 <div class="card-body text-center">
                     <h2 class='h4 card-title text-center mt-5 mb-1'><span class="bg cyan darken-3 text-white py-3 px-4 rounded-pill">パスワード変更</span></h2>
