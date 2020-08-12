@@ -18,6 +18,8 @@
                     <a class="tw-ic" href="https://shimotaroo.com/">
                         <i class="fab fa-wordpress fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
                     </a>
+                    <a href="{{ route('register') }}" class="btn btn-outline-white rounded-pill mr-md-3 mr-2">Sign up!</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-white rounded-pill">Login!</a>
                 </div>
             </div>
         <!-- Grid column -->

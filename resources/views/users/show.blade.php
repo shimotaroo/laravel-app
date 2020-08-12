@@ -5,7 +5,7 @@
 @section('content')
     @include('nav')
     <div class="row">
-        <div class="container col-lg-6 col-md-8 col-sm-10 col-xs-11 mx-auto">
+        <div class="container col-lg-6 col-md-8 col-sm-10 col-xs-11 mx-auto my-5">
             <div class="card mt-5">
                 <div class="card-body text-center">
                     <h2 class='h4 card-title text-center mt-5 mb-1'><span class="bg cyan darken-3 text-white py-3 px-4 rounded-pill">マイページ</span></h2>
@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="card-body d-flex flex-row align-items-center mt-2 mb-3">
-                    <div class="ml-4">
+                    <div class="ml-5">
                         <a href="{{ route('users.show', ['name' => $user->name]) }}" class="text-dark">
                             <img src="{{ asset('storage/'.$user->image) }}" alt="Contact Person" class="img-fuild rounded-circle" width="60" height="60">
                         </a>
@@ -23,8 +23,8 @@
                             {{ $user->name }}
                         </a>
                     </h2>
-                    <div class="ml-auto">
-                        <a class='btn btn-amber rounded-pill waves-effect' href="{{ route('users.edit', ['name' => $user->name]) }}">編集</a>
+                    <div class="ml-auto mr-4">
+                        <a class='btn orange lighten-1 text-white rounded-pill waves-effect' href="{{ route('users.edit', ['name' => $user->name]) }}">編集</a>
                     </div>
                 </div>
             </div>
@@ -43,8 +43,9 @@
                 <div class="tab-content" id="myTabContentJust">
                     {{-- 投稿した記事 --}}
                     <div class="tab-pane fade show active" id="post-articles-just" role="tabpanel" aria-labelledby="post-articles-tab-just">
+                        @if (!empty($postArticles->toArray()))
                         @foreach($postArticles as $postArticle)
-                        <div class='card mt-5 col-10 mr-auto ml-auto p-0'>
+                        <div class='card mt-5 col-10 mr-auto ml-auto p-0 grey lighten-5'>
                             <div class='card-body d-flex flex-row align-items-center mt-3 ml-3'>
                                 <img src="{{ asset('storage/'.$user->image) }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
                                 <div>
@@ -144,12 +145,18 @@
                             </div>
                         </div>
                         @endforeach
+                        @else
+                        <div class="mt-5 text-center">
+                            <p class="">{{ $user->name}}さんの投稿はまだはありません</p>
+                        </div>
+                    @endif
                     </div>
 
                     {{-- いいねした記事 --}}
                     <div class="tab-pane fade" id="like-articles-just" role="tabpanel" aria-labelledby="like-articles-tab-just">
+                        @if(!empty($likeArticles->toArray()))
                         @foreach($likeArticles as $likeArticle)
-                        <div class='card mt-5 col-10 mr-auto ml-auto p-0'>
+                        <div class='card mt-5 col-10 mr-auto ml-auto p-0 grey lighten-5'>
                             <div class='card-body d-flex flex-row align-items-center mt-3 ml-3'>
                                 <img src="{{ asset('storage/'.$user->image) }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
                                 <div>
@@ -248,7 +255,12 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
+                        @endforeach
+                        @else
+                            <div class="mt-5 text-center">
+                                <p class="">{{ $user->name}}さんがいいねした記事はありません</p>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
