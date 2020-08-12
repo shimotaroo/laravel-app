@@ -61,11 +61,11 @@ class Article extends Model
     public function sortByselectedSortType($sortType)
     {
         if ($sortType === 'desc') {
-            return $this->orderBy('created_at', 'desc')->paginate(3);
+            return $this->orderBy('created_at', 'desc');
         } elseif ($sortType === 'asc') {
-            return $this->orderBy('created_at', 'asc')->paginate(3);
+            return $this->orderBy('created_at', 'asc');
         } elseif ($sortType === 'like_count') {
-            return $this->withCount('likes')->orderBy('likes_count', 'desc')->paginate(3);
+            return $this->withCount('likes')->orderBy('likes_count', 'desc');
         }
     }
 }

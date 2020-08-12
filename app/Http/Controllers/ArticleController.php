@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\CompanyType;
 use App\Http\Requests\ArticleRequest;
+use App\Phase;
+use App\Prefecture;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,8 +22,11 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $articles = Article::orderBy('created_at', 'desc')->paginate(3);
+        $allArticles = Article::orderBy('created_at', 'desc');
+        $articles = $allArticles->paginate(3);
+        $articlesCount = $allArticles->count();
         $user = User::where('id', Auth::id())->first();
+        $sort = "新しい順";
 
         //検索用のラジオボタン用のデータ
         $prefecture = config('forSerchByPrefecture');
@@ -33,6 +39,8 @@ class ArticleController extends Controller
             'prefecture' => $prefecture,
             'companyType' => $companyType,
             'phase' => $phase,
+            'sort' => $sort,
+            'articlesCount' => $articlesCount,
         ]);
     }
 
@@ -118,25 +126,45 @@ class ArticleController extends Controller
     {
         $user = User::where('id', Auth::id())->first();
         $Article = new Article;
+        $allArticlesBySort = $Article->sortByselectedSortType($sortType);
+        $articles = $allArticlesBySort->paginate(3);
+        $articlesCount = $allArticlesBySort->count();
 
         //検索用のラジオボタン用のデータ
         $prefecture = config('forSerchByPrefecture');
         $companyType = config('forSerchByCompanyType');
         $phase = config('forSerchByPhase');
 
+        switch($sortType) {
+            case 'desc':
+                $sort = '新しい順';
+                break;
+            case 'asc':
+                $sort = '古い順';
+                break;
+            case 'like_count':
+                $sort = 'いいね数順';
+                break;
+                    }
+
         $data = [
-            'articles' => $Article->sortByselectedSortType($sortType),
+            'articles' => $articles,
             'user' => $user,
             'sortType' => $sortType,
             'prefecture' => $prefecture,
             'companyType' => $companyType,
             'phase' => $phase,
+            'sort' => $sort,
+            'articlesCount' => $articlesCount,
         ];
         return view('articles.index', $data);
     }
 
     public function search(Request $request)
     {
+        $prefectureSerch = $request->prefectureSearch;
+        $companySearch = $request->companySearch;
+        $phaseSearch = $request->phaseSearch;
 
         $query = Article::query();
         $user = User::where('id', Auth::id())->first();
@@ -145,22 +173,31 @@ class ArticleController extends Controller
         $companyType = config('forSerchByCompanyType');
         $phase = config('forSerchByPhase');
 
-        $prefectureSerch = $request->prefectureSearch;
-        $companySearch = $request->companySearch;
-        $phaseSearch = $request->phaseSearch;
+        $sort = "新しい順";
 
         //DBからデータ取得
         if($prefectureSerch !== "0") {
             $query->where('prefecture_id', $prefectureSerch);
+            $searchConditionForPrefecture = Prefecture::find($prefectureSerch)->prefecture;
+        } else {
+            $searchConditionForPrefecture = '指定なし';
         }
         if($companySearch  !== "0") {
             $query->where('company_type_id', $companySearch );
+            $searchConditionForCompany = CompanyType::find($companySearch)->company_type;
+        } else {
+            $searchConditionForCompany = '指定なし';
         }
         if($phaseSearch !== "0") {
             $query->where('phase_id', $phaseSearch);
+            $searchConditionForPhase = Phase::find($phaseSearch)->phase;
+        } else {
+            $searchConditionForPhase = '指定なし';
         }
 
-        $articles = $query->orderBy('created_at', 'desc')->paginate(3);
+        $allArticlesBySearch = $query->orderBy('created_at', 'desc');
+        $articles = $allArticlesBySearch->paginate(3);
+        $articlesCount = $allArticlesBySearch->count();
 
         $searchConditions = [$prefectureSerch, $companySearch, $phaseSearch];
 
@@ -171,6 +208,11 @@ class ArticleController extends Controller
             'companyType' => $companyType,
             'phase' => $phase,
             'searchConditions' => $searchConditions,
+            'sort' => $sort,
+            'articlesCount' => $articlesCount,
+            'searchConditionForPrefecture' => $searchConditionForPrefecture,
+            'searchConditionForCompany' => $searchConditionForCompany,
+            'searchConditionForPhase' => $searchConditionForPhase
         ]);
     }
 }
