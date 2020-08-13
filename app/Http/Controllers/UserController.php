@@ -14,7 +14,7 @@ class UserController extends Controller
     //ユーザーページ表示
     public function show(string $name)
     {
-        $user = User::where('name', $name)->first();
+        $user = User::where('name', $name)->first()->load(['articles.user', 'articles.prefecture', 'articles.companyType', 'articles.phase', 'articles.likes']);
         //投稿した記事
         $postArticles = $user->articles->sortByDesc('created_at');
         //いいねした記事
