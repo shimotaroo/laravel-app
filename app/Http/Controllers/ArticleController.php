@@ -23,7 +23,7 @@ class ArticleController extends Controller
     public function index()
     {
         $allArticles = Article::orderBy('created_at', 'desc');
-        $articles = $allArticles->paginate(3);
+        $articles = $allArticles->with(['user','prefecture', 'companyType', 'phase', 'likes'])->paginate(5);
         $articlesCount = $allArticles->count();
         $user = User::where('id', Auth::id())->first();
         $sort = "新しい順";
@@ -126,7 +126,7 @@ class ArticleController extends Controller
     {
         $user = User::where('id', Auth::id())->first();
         $Article = new Article;
-        $allArticlesBySort = $Article->sortByselectedSortType($sortType);
+        $allArticlesBySort = $Article->sortByselectedSortType($sortType)->with(['user','prefecture', 'companyType', 'phase', 'likes']);
         $articles = $allArticlesBySort->paginate(3);
         $articlesCount = $allArticlesBySort->count();
 
@@ -195,7 +195,7 @@ class ArticleController extends Controller
             $searchConditionForPhase = '指定なし';
         }
 
-        $allArticlesBySearch = $query->orderBy('created_at', 'desc');
+        $allArticlesBySearch = $query->orderBy('created_at', 'desc')->with(['user','prefecture', 'companyType', 'phase', 'likes']);
         $articles = $allArticlesBySearch->paginate(3);
         $articlesCount = $allArticlesBySearch->count();
 
