@@ -45,6 +45,7 @@ class Article extends Model
     }
 
     //ユーザーがいいね済みかどうかを判定するメソッド
+    //引数の頭に?をつけるとnuulableにできる
     public function isLikedByUser(?User $user): bool
     {
         //->likeでArticleモデルからlikesテーブルに紐づくUserモデルがコレクションで返る

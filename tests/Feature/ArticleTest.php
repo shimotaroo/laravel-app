@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Article;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -11,30 +12,40 @@ class ArticleTest extends TestCase
 {
     use RefreshDatabase;
 
-    //記事一覧表示画面にアクセス
-    public function testIndex()
+    //isLikedByUserメソッドの引数がnullの場合
+    public function testIsLikedByNull()
     {
-        $response = $this->get(route('articles.index'));
+        //
+        $article = factory(Article::class)->create();
 
-        $response->assertStatus(200)->assertViewIs('articles.index');
+        $result = $article->isLikedByUser(null);
+
+        $this->assertFalse($result);
     }
 
-    //未ログインユーザーが投稿画面にアクセス
-    public function testGuestCreate()
+    //いいねしているケース
+    public function testIsLikedByUser()
     {
-        $response = $this->get(route('articles.create'));
-        $response->assertRedirect(route('login'));
-    }
-
-    //ログインユーザーが投稿画面にアクセス
-    public function testAtuhCreate()
-    {
+        $article = factory(Article::class)->create();
         $user = factory(User::class)->create();
+        $article->likes()->attach($user);
 
-        $response = $this->actingAs($user)->get(route('articles.create'));
+        $result = $article->isLikedByUser($user);
 
-        $response->assertStatus(200)->assertViewIs('articles.create');
+        $this->assertTrue($result);
     }
 
+    //いいねしていないケース
+    public function testIsLikedByAnotheruser()
+    {
+        $article = factory(Article::class)->create();
+        $user = factory(User::class)->create();
+        $anotherUser = factory(User::class)->create();
+        $article->likes()->attach($anotherUser);
+
+        $result = $article->isLikedByUser($user);
+
+        $this->assertFalse($result);
+    }
 
 }
