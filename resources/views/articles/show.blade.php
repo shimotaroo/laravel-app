@@ -51,12 +51,12 @@
                                                     </button>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <a href="{{ route('articles.edit', ['article' => $article]) }}" class="dropdown-item">
-                                                        <i class="fas fa-pen mr-1"></i>編集する
+                                                    <a href="{{ route('articles.edit', ['article' => $article]) }}" class="dropdown-item text-center">
+                                                        <i class="fas fa-pen mr-2"></i>編集する
                                                     </a>
                                                     <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item text-danger" data-toggle="modal" data-target="#modal-delete-{{ $article->id }}">
-                                                        <i class="fas fa-trash-alt mr-1"></i>削除する
+                                                    <a class="dropdown-item text-danger text-center" data-toggle="modal" data-target="#modal-delete-{{ $article->id }}">
+                                                        <i class="fas fa-trash-alt mr-2"></i>削除する
                                                     </a>
                                                 </div>
                                             </div>

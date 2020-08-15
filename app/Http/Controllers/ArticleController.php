@@ -22,25 +22,25 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $allArticles = Article::orderBy('created_at', 'desc');
-        $articles = $allArticles->with(['user','prefecture', 'companyType', 'phase', 'likes'])->paginate(5);
-        $articlesCount = $allArticles->count();
+        $all_articles = Article::orderBy('created_at', 'desc');
+        $articles = $all_articles->with(['user','prefecture', 'companyType', 'phase', 'likes'])->paginate(5);
+        $articles_count = $all_articles->count();
         $user = User::where('id', Auth::id())->first();
         $sort = "新しい順";
 
         //検索用のラジオボタン用のデータ
         $prefecture = config('forSerchByPrefecture');
-        $companyType = config('forSerchByCompanyType');
+        $company_type = config('forSerchByCompanyType');
         $phase = config('forSerchByPhase');
 
         return view('articles.index', [
             'articles' => $articles,
             'user' => $user,
             'prefecture' => $prefecture,
-            'companyType' => $companyType,
+            'company_type' => $company_type,
             'phase' => $phase,
             'sort' => $sort,
-            'articlesCount' => $articlesCount,
+            'articles_count' => $articles_count,
         ]);
     }
 
@@ -122,20 +122,20 @@ class ArticleController extends Controller
     }
 
     //記事一覧ページでの並び替え機能
-    public function sort(string $sortType)
+    public function sort(string $sort_type)
     {
         $user = User::where('id', Auth::id())->first();
         $Article = new Article;
-        $allArticlesBySort = $Article->sortByselectedSortType($sortType)->with(['user','prefecture', 'companyType', 'phase', 'likes']);
-        $articles = $allArticlesBySort->paginate(3);
-        $articlesCount = $allArticlesBySort->count();
+        $all_articles_by_sort = $Article->sortByselectedSortType($sort_type)->with(['user','prefecture', 'companyType', 'phase', 'likes']);
+        $articles = $all_articles_by_sort->paginate(3);
+        $articles_count = $all_articles_by_sort->count();
 
         //検索用のラジオボタン用のデータ
         $prefecture = config('forSerchByPrefecture');
-        $companyType = config('forSerchByCompanyType');
+        $company_type = config('forSerchByCompanyType');
         $phase = config('forSerchByPhase');
 
-        switch($sortType) {
+        switch($sort_type) {
             case 'desc':
                 $sort = '新しい順';
                 break;
@@ -150,69 +150,69 @@ class ArticleController extends Controller
         $data = [
             'articles' => $articles,
             'user' => $user,
-            'sortType' => $sortType,
+            'sortType' => $sort_type,
             'prefecture' => $prefecture,
-            'companyType' => $companyType,
+            'company_type' => $company_type,
             'phase' => $phase,
             'sort' => $sort,
-            'articlesCount' => $articlesCount,
+            'articles_count' => $articles_count,
         ];
         return view('articles.index', $data);
     }
 
     public function search(Request $request)
     {
-        $prefectureSerch = $request->prefectureSearch;
-        $companySearch = $request->companySearch;
-        $phaseSearch = $request->phaseSearch;
+        $prefecture_serch = $request->prefecture_search;
+        $company_search = $request->company_search;
+        $phase_search = $request->phase_search;
 
         $query = Article::query();
         $user = User::where('id', Auth::id())->first();
         //検索用のラジオボタン用のデータ
         $prefecture = config('forSerchByPrefecture');
-        $companyType = config('forSerchByCompanyType');
+        $company_type = config('forSerchByCompanyType');
         $phase = config('forSerchByPhase');
 
         $sort = "新しい順";
 
         //DBからデータ取得
-        if($prefectureSerch !== "0") {
-            $query->where('prefecture_id', $prefectureSerch);
-            $searchConditionForPrefecture = Prefecture::find($prefectureSerch)->prefecture;
+        if($prefecture_serch !== "0") {
+            $query->where('prefecture_id', $prefecture_serch);
+            $search_condition_for_prefecture = Prefecture::find($prefecture_serch)->prefecture;
         } else {
-            $searchConditionForPrefecture = '指定なし';
+            $search_condition_for_prefecture = '指定なし';
         }
-        if($companySearch  !== "0") {
-            $query->where('company_type_id', $companySearch );
-            $searchConditionForCompany = CompanyType::find($companySearch)->company_type;
+        if($company_search  !== "0") {
+            $query->where('company_type_id', $company_search );
+            $search_condition_for_company = CompanyType::find($company_search)->company_type;
         } else {
-            $searchConditionForCompany = '指定なし';
+            $search_condition_for_company = '指定なし';
         }
-        if($phaseSearch !== "0") {
-            $query->where('phase_id', $phaseSearch);
-            $searchConditionForPhase = Phase::find($phaseSearch)->phase;
+        if($phase_search !== "0") {
+            $query->where('phase_id', $phase_search);
+            $search_condition_for_phase = Phase::find($phase_search)->phase;
         } else {
-            $searchConditionForPhase = '指定なし';
+            $search_condition_for_phase = '指定なし';
         }
 
-        $allArticlesBySearch = $query->orderBy('created_at', 'desc')->with(['user','prefecture', 'companyType', 'phase', 'likes']);
-        $articles = $allArticlesBySearch->paginate(3);
-        $articlesCount = $allArticlesBySearch->count();
+        $all_articles_by_search = $query->orderBy('created_at', 'desc')->with(['user','prefecture', 'companyType', 'phase', 'likes']);
+        $articles = $all_articles_by_search->paginate(3);
+        $articles_count = $all_articles_by_search->count();
 
-        $searchConditions = [$prefectureSerch, $companySearch, $phaseSearch];
+        $search_conditions = [$prefecture_serch, $company_search, $phase_search];
 
         return view('articles.index', [
             'articles' => $articles,
             'user' => $user,
             'prefecture' => $prefecture,
-            'companyType' => $companyType,
+            'company_type' => $company_type,
             'phase' => $phase,
-            'searchConditions' => $searchConditions,
+            'search_conditions' => $search_conditions,
             'sort' => $sort,
-            'articlesCount' => $articlesCount,
-            'searchConditionForPrefecture' => $searchConditionForPrefecture,
-            'searchConditionForCompany' => $searchConditionForCompany,
-            'searchConditionForPhase' => $searchConditionForPhase
+            'articles_count' => $articles_count,
+            'search_condition_for_prefecture' => $search_condition_for_prefecture,
+            'search_condition_for_company' => $search_condition_for_company,
+            'search_condition_for_phase' => $search_condition_for_phase
         ]);
     }
 }

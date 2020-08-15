@@ -78,28 +78,28 @@ class RegisterController extends Controller
     public function showProviderUserRegistrationForm(Request $request, string $provider)
     {
         $token = $request->token;
-        $providerUser = Socialite::driver($provider);
+        $provider_user = Socialite::driver($provider);
 
         //google
         if ($provider === 'google') {
-            $providerUser = $providerUser->userFromToken($token);
+            $provider_user = $provider_user->userFromToken($token);
 
             return view('auth.social_register', [
                 'provider' => $provider,
-                'email' => $providerUser->getEmail(),
-                'token' => $providerUser->token,
+                'email' => $provider_user->getEmail(),
+                'token' => $provider_user->token,
             ]);
 
         //twitter
         } elseif ($provider === 'twitter') {
-            $tokenSecret = $request->tokenSecret;
-            $providerUser = $providerUser->userFromTokenAndSecret($token, $tokenSecret);
+            $token_secret = $request->token_secret;
+            $provider_user = $provider_user->userFromTokenAndSecret($token, $token_secret);
 
             return view('auth.social_register', [
                 'provider' => $provider,
-                'email' => $providerUser->getEmail(),
-                'token' => $providerUser->token,
-                'tokenSecret' => $providerUser->tokenSecret,
+                'email' => $provider_user->getEmail(),
+                'token' => $provider_user->token,
+                'token_secret' => $provider_user->token_secret,
             ]);
         }
     }
@@ -118,24 +118,24 @@ class RegisterController extends Controller
                 'name' => ['required', 'string', 'min:3', 'max:15', 'unique:users'],
                 'age' => ['numeric', 'min:1', 'max:100', 'nullable'],
                 'token' => ['required', 'string'],
-                'tokenSecret' => ['required', 'string'],
+                'token_secret' => ['required', 'string'],
             ]);
         }
 
         $token = $request->token;
-        $providerUser = Socialite::driver($provider);
+        $provider_user = Socialite::driver($provider);
 
         if ($provider === 'google') {
-            $providerUser = $providerUser->userFromToken($token);
+            $provider_user = $provider_user->userFromToken($token);
         } elseif ($provider === 'twitter') {
-            $tokenSecret = $request->tokenSecret;
-            $providerUser = $providerUser->userFromTokenAndSecret($token, $tokenSecret);
+            $token_secret = $request->token_secret;
+            $provider_user = $provider_user->userFromTokenAndSecret($token, $token_secret);
         }
 
         $user = User::create([
             'name' => $request->name,
             'age' => $request->age,
-            'email' => $providerUser->getEmail(),
+            'email' => $provider_user->getEmail(),
             'password' => null,
         ]);
 

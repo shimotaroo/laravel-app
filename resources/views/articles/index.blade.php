@@ -17,15 +17,15 @@
                         並び順<i class="fas fa-angle-double-right mx-2"></i>{{ $sort }}
                     </small>
                 </div>
-                <div class="col-6 text-right">
+                {{-- <div class="col-6 text-right">
                     <small class="mr-1">
-                        全{{ $articlesCount}}件
+                        全{{ $articles_count }}件
                     </small>
-                </div>
-                @if (isset($searchConditionForPrefecture))
+                </div> --}}
+                @if (isset($search_condition_for_prefecture))
                     <div class="col-12">
                         <small class="ml-3">
-                            検索条件<i class="fas fa-angle-double-right mx-2"></i>都道府県：{{ $searchConditionForPrefecture }}、事業形態：{{ $searchConditionForCompany }}、フェーズ：{{ $searchConditionForPhase }}
+                            検索条件<i class="fas fa-angle-double-right mx-2"></i>都道府県：{{ $search_condition_for_prefecture }}、事業形態：{{ $search_condition_for_company }}、フェーズ：{{ $search_condition_for_phase }}
                         </small>
                     </div>
                 @endif
@@ -54,11 +54,11 @@
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a href="{{ route('articles.edit', ['article' => $article]) }}" class="dropdown-item text-center">
-                                                <i class="fas fa-pen mr-1"></i>編集する
+                                                <i class="fas fa-pen mr-2"></i>編集する
                                             </a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item text-danger text-center" data-toggle="modal" data-target="#modal-delete-{{ $article->id }}">
-                                                <i class="fas fa-trash-alt mr-1"></i>削除する
+                                                <i class="fas fa-trash-alt mr-2"></i>削除する
                                             </a>
                                         </div>
                                     </div>
@@ -134,12 +134,19 @@
                     </div>
                 @endforeach
             @else
-                記事がありません
+                <div class='mt-5 text-center col-lg-8 col-md-8 col-sm-12 col-xs-12 p-0'>
+                    <div class="mt-5">
+                        <p class="mt-5">
+                            検索条件に合う記事がありません
+                        </p>
+                        <a class='btn cyan darken-3 text-white waves-effect' href="{{ route('articles.index') }}">検索条件を解除する</a>
+                    </div>
+                </div>
             @endif
             <div class="mt-5 mb-3 col-lg-8 col-md-8 col-sm-12 col-xs-12 p-0 d-flex justify-content-center">
-                @if(isset($sortType))
-                    {{ $articles->appends($sortType)->links() }}
-                @elseif(isset($searchConditions))
+                @if(isset($sort_type))
+                    {{ $articles->appends($sort_type)->links() }}
+                @elseif(isset($search_conditions))
                     {{ $articles->appends(request()->input())->links() }}
                 @else
                     {{ $articles->links() }}

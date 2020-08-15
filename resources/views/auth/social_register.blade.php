@@ -20,7 +20,7 @@
                             @csrf
                             <input type="hidden" name='token' value="{{ $token }}">　
                             @if ( $provider === 'twitter')
-                                <input type="hidden" name='tokenSecret' value="{{ $tokenSecret }}">　
+                                <input type="hidden" name='token_secret' value="{{ $token_secret }}">　
                             @endif
                             <div class="md-form col-lg-7 col-md-8 col-sm-9 col-xs-10 mx-auto">
                                 <label for="name">ユーザー名<small class="text-warning ml-1">【必須】</small></label>

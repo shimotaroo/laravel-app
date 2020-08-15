@@ -16,14 +16,14 @@ class UserController extends Controller
     {
         $user = User::where('name', $name)->first()->load(['articles.user', 'articles.prefecture', 'articles.companyType', 'articles.phase', 'articles.likes']);
         //投稿した記事
-        $postArticles = $user->articles->sortByDesc('created_at');
+        $post_articles = $user->articles->sortByDesc('created_at');
         //いいねした記事
-        $likeArticles = $user->likes->sortByDesc('created_at');
+        $like_articles = $user->likes->sortByDesc('created_at');
 
         return view('users.show', [
             'user' => $user,
-            'postArticles' => $postArticles,
-            'likeArticles' => $likeArticles,
+            'post_articles' => $post_articles,
+            'like_articles' => $like_articles,
         ]);
     }
 
@@ -40,32 +40,32 @@ class UserController extends Controller
     {
 
         $user = User::where('name', $name)->first();
-        $allRequest = $request->all();
+        $all_request = $request->all();
 
-        $profileImage = $request->file('image');
-        if ($profileImage) {
-            $allRequest['image'] = $this->saveProfileImage($profileImage, $user->id);
+        $profile_image = $request->file('image');
+        if ($profile_image) {
+            $all_request['image'] = $this->saveProfileImage($profile_image, $user->id);
         }
 
-        $user->fill($allRequest)->save();
+        $user->fill($all_request)->save();
         return redirect()->route('users.show', ["name" => $user->name]);
     }
 
     //画像の名前変更、storageに保存
-    public function saveProfileImage($profileImage, $id)
+    public function saveProfileImage($profile_image, $id)
     {
         //インスタンス取得
-        $image = \Image::make($profileImage);
+        $image = \Image::make($profile_image);
         //リサイズ
         $image->fit(80, 80, function($constraint){
             $constraint->upsize();
         });
         //保存
-        $fileName = 'profile_'.$id.'.'.$profileImage->getClientOriginalExtension();
-        $savePath = 'storage/'.$fileName;
-        $image->save($savePath);
+        $file_name = 'profile_'.$id.'.'.$profile_image->getClientOriginalExtension();
+        $save_path = 'storage/'.$file_name;
+        $image->save($save_path);
 
-        return $fileName;
+        return $file_name;
     }
 
     //パスワード編集画面

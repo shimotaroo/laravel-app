@@ -50,9 +50,9 @@ class LoginController extends Controller
     //Googleアカウントでログイン可能にする
     public function handleProviderCallback(Request $request, string $provider)
     {
-        $providerUser = Socialite::driver($provider)->user();
+        $provider_user = Socialite::driver($provider)->user();
 
-        $user = User::where('email', $providerUser->getEmail())->first();
+        $user = User::where('email', $provider_user->getEmail())->first();
 
         if($user) {
             //trueでログアウトをしない限りログイン状態を維持できる
@@ -64,15 +64,15 @@ class LoginController extends Controller
         if($provider === 'google') {
             return redirect()->route('register.{provider}', [
                 'provider' => $provider,
-                'email' => $providerUser->getEmail(),
-                'token' => $providerUser->token,
+                'email' => $provider_user->getEmail(),
+                'token' => $provider_user->token,
             ]);
         } elseif($provider === 'twitter') {
             return redirect()->route('register.{provider}', [
                 'provider' => $provider,
-                'email' => $providerUser->getEmail(),
-                'token' => $providerUser->token,
-                'tokenSecret' => $providerUser->tokenSecret,
+                'email' => $provider_user->getEmail(),
+                'token' => $provider_user->token,
+                'token_secret' => $provider_user->tokenSecret,
             ]);
         }
 
