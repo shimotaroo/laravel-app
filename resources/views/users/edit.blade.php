@@ -28,7 +28,7 @@
                                     <input type="text" class="form-control" id="name" name="name" required value="{{ $user->name }}">
                                     <small>3〜15文字で入力してください</small>
                                 </div>
-                                <div class="md-form col-lg-8 col-md-7 col-sm-8 col-xs-10 mx-auto">
+                                <div class="md-form col-lg-6 col-md-7 col-sm-8 col-xs-10 mx-auto">
                                     <label for="age">年齢</label>
                                     <input type="text" class="form-control" id="age" name="age" value="{{ $user->age }}">
                                 </div>

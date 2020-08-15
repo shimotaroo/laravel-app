@@ -20,9 +20,10 @@
                             <form action="{{ route('articles.update', ['article' => $article]) }}" method="POST">
                                 @method('PATCH')
                                 @include('articles.form')
-                                <button type="submit" class="btn btn-block cyan darken-3 text-white col-lg-6 col-md-7 col-sm-8 col-xs-10 mx-auto mt-5 mb-5">
+                                <button type="submit" class="btn btn-block cyan darken-3 text-white waves-effect col-lg-6 col-md-7 col-sm-8 col-xs-10 mx-auto mt-5">
                                     更新する
                                 </button>
+                                <a class='btn btn-block grey text-white waves-effect col-lg-6 col-md-7 col-sm-8 col-xs-10 mx-auto mt-3 mb-5' href="{{ route('articles.index') }}">戻る</a>
                             </form>
                         </div>
                     </div>

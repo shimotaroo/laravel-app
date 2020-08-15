@@ -55,4 +55,4 @@ Route::prefix('articles')->name('articles.')->group(function() {
 Route::get('/search', 'ArticleController@search')->name('articles.search');
 
 //並び替え
-Route::get('/{sortType}', 'ArticleController@sort')->name('articles.sort');
+Route::get('/{sort_type}', 'ArticleController@sort')->name('articles.sort');

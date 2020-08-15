@@ -139,7 +139,7 @@ class ArticleControllerTest extends TestCase
     {
         $sort = 'asc';
 
-        $response = $this->get(route('articles.sort', ['sortType' => $sort]));
+        $response = $this->get(route('articles.sort', ['sort_type' => $sort]));
 
         $response->assertStatus(200)->assertViewIs('articles.index');
     }
