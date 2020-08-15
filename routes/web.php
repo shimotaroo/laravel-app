@@ -34,15 +34,15 @@ Route::resource('/articles', 'ArticleController')->only(['show']);
 
 //ユーザーページ表示
 Route::prefix('users')->name('users.')->group(function(){
-    Route::get('/{name}', 'UserController@show')->name('show');
+    Route::get('/{name}', 'UserController@show')->name('show')->middleware('auth');
     //プロフィール編集画面
-    Route::get('/{name}/edit', 'UserController@edit')->name('edit');
+    Route::get('/{name}/edit', 'UserController@edit')->name('edit')->middleware('auth');
     //プロフィール編集処理
-    Route::patch('/{name}/update', 'UserController@update')->name('update');
+    Route::patch('/{name}/update', 'UserController@update')->name('update')->middleware('auth');
     //パスワード編集画面
-    Route::get('/{name}/password/edit', 'UserController@editPassword')->name('password.edit');
+    Route::get('/{name}/password/edit', 'UserController@editPassword')->name('password.edit')->middleware('auth');
     //パスワード編集処理
-    Route::patch('/{name}/password/update', 'UserController@updatePassword')->name('password.update');
+    Route::patch('/{name}/password/update', 'UserController@updatePassword')->name('password.update')->middleware('auth');
 });
 
 //いいね機能

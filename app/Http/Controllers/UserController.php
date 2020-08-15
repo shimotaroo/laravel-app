@@ -81,8 +81,6 @@ class UserController extends Controller
     {
         $user = User::where('name', $name)->first();
 
-        // dd((Hash::check($request->current_password, $user->password)));
-
         //現在のパスワードが合っているかチェック
         if(!(Hash::check($request->current_password, $user->password)))
         {
