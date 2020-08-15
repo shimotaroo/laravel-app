@@ -47,18 +47,18 @@ class ArticleControllerTest extends TestCase
     public function testStore()
     {
         $user = factory(User::class)->create();
-        $userId = $user->id;
-        $prefectureId = factory(Prefecture::class)->create()->id;
-        $companyTypeId = factory(CompanyType::class)->create()->id;
+        $user_id = $user->id;
+        $prefecture_id = factory(Prefecture::class)->create()->id;
+        $company_type_id = factory(CompanyType::class)->create()->id;
+        $phase_id = factory(Phase::class)->create()->id;
 
-        $phaseId = factory(Phase::class)->create()->id;
         $this->actingAs($user)->get(route('articles.create'));
 
         $response = $this->post(route('articles.store'), [
-            'user_id' => $userId,
-            'prefecture_id' => $prefectureId,
-            'company_type_id' => $companyTypeId,
-            'phase_id' => $phaseId,
+            'user_id' => $user_id,
+            'prefecture_id' => $prefecture_id,
+            'company_type_id' => $company_type_id,
+            'phase_id' => $phase_id,
             'question_content' => 'あああああ',
             'other_information' => 'いいいいい',
             'impression' => 'ううううう',
@@ -92,17 +92,17 @@ class ArticleControllerTest extends TestCase
     public function testUpdate()
     {
         $article = factory(Article::class)->create();
-        $prefectureId = factory(Prefecture::class)->create()->id;
-        $companyTypeId = factory(CompanyType::class)->create()->id;
-        $phaseId = factory(Phase::class)->create()->id;
+        $prefecture_id = factory(Prefecture::class)->create()->id;
+        $company_type_id = factory(CompanyType::class)->create()->id;
+        $phase_id = factory(Phase::class)->create()->id;
 
         $user = $article->user;
         $this->actingAs($user)->get(route('articles.edit', ['article' => $article]));
 
         $response = $this->patch(route('articles.update', ['article' => $article]), [
-            'prefecture_id' => $prefectureId,
-            'company_type_id' => $companyTypeId,
-            'phase_id' => $phaseId,
+            'prefecture_id' => $prefecture_id,
+            'company_type_id' => $company_type_id,
+            'phase_id' => $phase_id,
             'question_content' => 'あああああ',
             'other_information' => 'いいいいい',
             'impression' => 'ううううう',

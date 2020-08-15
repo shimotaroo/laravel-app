@@ -15,7 +15,6 @@ class ArticleTest extends TestCase
     //isLikedByUserメソッドの引数がnullの場合
     public function testIsLikedByNull()
     {
-        //
         $article = factory(Article::class)->create();
 
         $result = $article->isLikedByUser(null);
@@ -40,8 +39,8 @@ class ArticleTest extends TestCase
     {
         $article = factory(Article::class)->create();
         $user = factory(User::class)->create();
-        $anotherUser = factory(User::class)->create();
-        $article->likes()->attach($anotherUser);
+        $another_user = factory(User::class)->create();
+        $article->likes()->attach($another_user);
 
         $result = $article->isLikedByUser($user);
 
