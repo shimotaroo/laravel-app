@@ -1,4 +1,4 @@
-version: 2.1
+version: 2.0
 jobs:
   build:
     docker:
@@ -10,12 +10,20 @@ jobs:
       - APP_KEY: base64:Q0cJelvqonwSbdZ591P40cyMQ13+AfHj+1jYy4cALfM=
       - DB_CONNECTION: circle_test
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
+    working_directory: ~/repo
     steps:
       - checkout
-      - run: composer install -n --prefer-dist
       - run: sudo docker-php-ext-install pdo_mysql
+      - restore_cache:
+          key: composer-v1-{{ checksum "composer.json" }}
+      - run: composer install -n --prefer-dist
+      - save_cache:
+          paths:
+            - ./vendor
+          key: v1-dependencies-{{ checksum "composer.json" }}
       - run: npm ci
       - run: npm run dev
+      - run: php artisan migrate
       - run:
         name: Run PHPUnit
         command: ./vendor/bin/phpunit
