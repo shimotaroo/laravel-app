@@ -11,7 +11,6 @@ executors:
       - APP_KEY: base64:Q0cJelvqonwSbdZ591P40cyMQ13+AfHj+1jYy4cALfM=
       - DB_CONNECTION: circle_test
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
-    working_directory: ~/repo
 
 commands:
   install-php-extensions:
@@ -22,7 +21,7 @@ commands:
   restore-cache-composer:
     steps:
       - restore_cache:
-          key: v1-dependencies-{{ checksum "laravel-app/composer.json" }}
+          key: v1-dependencies-{{ checksum "composer.json" }}
   install-composer:
     steps:
       - run:
@@ -34,7 +33,7 @@ commands:
       - save_cache:
           paths:
             - ./vendor
-          key: v1-dependencies-{{ checksum "laravel-app/composer.json" }}
+          key: v1-dependencies-{{ checksum "composer.json" }}
   npm-ci:
     steps:
       - run:
