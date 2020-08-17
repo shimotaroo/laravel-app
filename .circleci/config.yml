@@ -48,7 +48,7 @@ commands:
     steps:
       - run:
           name: Migration
-          working_directory: laravel-app
+          working_directory: ./
           command: php artisan migrate
   test-unittest:
     steps:
