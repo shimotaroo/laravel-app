@@ -21,7 +21,7 @@ commands:
   restore-cache-composer:
     steps:
       - restore_cache:
-          key: v1-dependencies-{{ checksum "composer.json" }}
+          key: v1-dependencies-{{ checksum "./composer.json" }}
   install-composer:
     steps:
       - run:
@@ -33,7 +33,7 @@ commands:
       - save_cache:
           paths:
             - ./vendor
-          key: v1-dependencies-{{ checksum "composer.json" }}
+          key: v1-dependencies-{{ checksum "./composer.json" }}
   npm-ci:
     steps:
       - run:
