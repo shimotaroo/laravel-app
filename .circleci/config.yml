@@ -3,7 +3,7 @@ version: 2.1
 executors:
   laravel-circleci:
     docker:
-      - image: circleci/php:7.4-fpm-node-browsers
+      - image: circleci/php:7.4-node-browsers
       - image: circleci/mysql:5.7
     environment:
       - APP_DEBUG: true
