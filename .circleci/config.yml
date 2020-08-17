@@ -1,6 +1,7 @@
-version: 2.0
-jobs:
-  build:
+version: 2.1
+
+executors:
+  laravel-circleci:
     docker:
       - image: circleci/php:7.4-fpm-node-browsers
       - image: circleci/mysql:5.7
@@ -11,19 +12,63 @@ jobs:
       - DB_CONNECTION: circle_test
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
     working_directory: ~/repo
+
+commands:
+  install-php-extensions:
     steps:
-      - checkout
-      - run: sudo docker-php-ext-install pdo_mysql
+      - run:
+          name: Install PHP Exetensions
+          command: sudo docker-php-ext-install pdo_mysql
+  restore-cache-composer:
+    steps:
       - restore_cache:
-          key: composer-v1-{{ checksum "composer.json" }}
-      - run: composer install -n --prefer-dist
+          key: v1-dependencies-{{ checksum "laravel-app/composer.json" }}
+  install-composer:
+    steps:
+      - run:
+          name: Install Composer
+          working_directory: laravel-app
+          command: composer install -n --prefer-dist
+  save-cache-composer:
+    steps:
       - save_cache:
           paths:
             - ./vendor
-          key: v1-dependencies-{{ checksum "composer.json" }}
-      - run: npm ci
-      - run: npm run dev
-      - run: php artisan migrate
+          key: v1-dependencies-{{ checksum "laravel-app/composer.json" }}
+  npm-ci:
+    steps:
       - run:
-        name: Run PHPUnit
-        command: ./vendor/bin/phpunit
+          name: npm CI
+          command: npm ci
+  npm-run-dev:
+    steps:
+      - run:
+          name: Run npm
+          command: npm run dev
+  migration:
+    steps:
+      - run:
+          name: Migration
+          working_directory: laravel-app
+          command: php artisan migrate
+  test-unittest:
+    steps:
+      - run:
+          name: Run PHPUnit
+          working_directory: laravel-app
+          command: ./vendor/bin/phpunit
+
+jobs:
+  build:
+    executor:
+      name: laravel-circleci
+    steps:
+      - checkout
+      - install-php-extensions
+      - restore-cache-composer
+      - install-composer
+      - save-cache-composer
+      - npm-ci
+      - npm-run-dev
+      - migration
+      - test-unittest
