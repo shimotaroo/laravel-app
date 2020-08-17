@@ -26,7 +26,7 @@ commands:
     steps:
       - run:
           name: Install Composer
-          working_directory: laravel-app
+          working_directory: ./
           command: composer install -n --prefer-dist
   save-cache-composer:
     steps:
