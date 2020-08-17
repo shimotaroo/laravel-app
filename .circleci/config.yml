@@ -54,7 +54,7 @@ commands:
     steps:
       - run:
           name: Run PHPUnit
-          working_directory: laravel-app
+          working_directory: ./
           command: ./vendor/bin/phpunit
 
 jobs:
