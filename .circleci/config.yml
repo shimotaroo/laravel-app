@@ -4,13 +4,14 @@ executors:
   laravel-circleci:
     docker:
       - image: circleci/php:7.4-fpm-node-browsers
+        environment:
+          - APP_DEBUG: true
+          - APP_ENV: testing
+          - APP_KEY: base64:Q0cJelvqonwSbdZ591P40cyMQ13+AfHj+1jYy4cALfM=
       - image: circleci/mysql:5.7
-    environment:
-      - APP_DEBUG: true
-      - APP_ENV: testing
-      - APP_KEY: base64:Q0cJelvqonwSbdZ591P40cyMQ13+AfHj+1jYy4cALfM=
-      - DB_CONNECTION: circle_test
-      - MYSQL_ALLOW_EMPTY_PASSWORD: true
+        environment:
+          - DB_CONNECTION: circle_test
+          - MYSQL_ALLOW_EMPTY_PASSWORD: true
 
 commands:
   install-php-extensions:
