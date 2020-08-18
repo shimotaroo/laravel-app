@@ -13,6 +13,13 @@ executors:
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
 
 commands:
+  install-dockerize:
+    steps:
+      - run:
+          name: Install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.6.1
   install-php-extensions:
     steps:
       - run:
@@ -63,6 +70,7 @@ jobs:
       name: laravel-circleci
     steps:
       - checkout
+      - install-dockerize
       - install-php-extensions
       - restore-cache-composer
       - install-composer
