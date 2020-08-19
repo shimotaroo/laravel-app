@@ -4,13 +4,10 @@ executors:
   laravel-circleci:
     docker:
       - image: circleci/php:7.4-node-browsers
-      - image: circleci/mysql:5.7
     environment:
       - APP_DEBUG: true
       - APP_ENV: testing
       - APP_KEY: base64:Q0cJelvqonwSbdZ591P40cyMQ13+AfHj+1jYy4cALfM=
-      - DB_CONNECTION: circle_test
-      - MYSQL_ALLOW_EMPTY_PASSWORD: true
 
 commands:
   install-dockerize:
@@ -70,3 +67,12 @@ jobs:
       name: laravel-circleci
     steps:
       - checkout
+      - install-dockerize
+      - install-php-extensions
+      - restore-cache-composer
+      - install-composer
+      - save-cache-composer
+      - npm-ci
+      - npm-run-dev
+      - migration
+      - test-unittest
