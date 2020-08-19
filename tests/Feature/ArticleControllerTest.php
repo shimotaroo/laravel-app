@@ -52,7 +52,7 @@ class ArticleControllerTest extends TestCase
         $company_type_id = factory(CompanyType::class)->create()->id;
         $phase_id = factory(Phase::class)->create()->id;
 
-        $this->actingAs($user)->get(route('articles.create'));
+        $this->get(route('articles.create'));
 
         $response = $this->post(route('articles.store'), [
             'user_id' => $user_id,
