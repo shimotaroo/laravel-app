@@ -33,6 +33,7 @@ class ArticleControllerTest extends TestCase
     //ログインユーザーが投稿画面にアクセス
     public function testAuthCreate()
     {
+        $this->withoutExceptionHandling();
         //テストに必要なUserモデルを「準備」
         $user = factory(User::class)->create();
 
@@ -52,7 +53,7 @@ class ArticleControllerTest extends TestCase
         $company_type_id = factory(CompanyType::class)->create()->id;
         $phase_id = factory(Phase::class)->create()->id;
 
-        $this->get(route('articles.create'));
+        $this->actingAs($user)->get(route('articles.create'));
 
         $response = $this->post(route('articles.store'), [
             'user_id' => $user_id,
@@ -80,6 +81,7 @@ class ArticleControllerTest extends TestCase
     //ログインユーザーが投稿編集画面にアクセス
     public function testAuthEdit()
     {
+        $this->withoutExceptionHandling()
         $article = factory(Article::class)->create();
         $user = $article->user;
 
