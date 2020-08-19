@@ -57,19 +57,14 @@ commands:
           name: Migration
           working_directory: ./
           command: php artisan migrate
+  test-unittest:
+    steps:
+      - run:
+          name: Run PHPUnit
+          working_directory: ./
+          command: ./vendor/bin/phpunit
 
 jobs:
   build:
     executor:
       name: laravel-circleci
-    steps:
-      - checkout
-      - install-dockerize
-      - install-php-extensions
-      - restore-cache-composer
-      - install-composer
-      - save-cache-composer
-      - npm-ci
-      - npm-run-dev
-      - migration
-
