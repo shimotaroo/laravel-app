@@ -68,3 +68,5 @@ jobs:
   build:
     executor:
       name: laravel-circleci
+    steps:
+      - checkout
