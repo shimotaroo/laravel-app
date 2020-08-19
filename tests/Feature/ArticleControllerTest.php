@@ -81,7 +81,7 @@ class ArticleControllerTest extends TestCase
     //ログインユーザーが投稿編集画面にアクセス
     public function testAuthEdit()
     {
-        $this->withoutExceptionHandling()
+        $this->withoutExceptionHandling();
         $article = factory(Article::class)->create();
         $user = $article->user;
 
