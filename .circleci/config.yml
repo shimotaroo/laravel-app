@@ -41,6 +41,14 @@ commands:
           key: v1-dependencies-{{ checksum "./composer.json" }}
           paths:
             - vendor
+  npm-ci:
+    steps:
+      - run:
+          name: npm CI
+          command: |
+            if [ ! -d node_modules ]; then
+              npm ci
+            fi
   restore-cache-npm:
     steps:
       - restore_cache:
@@ -81,7 +89,8 @@ jobs:
       - install-composer
       - save-cache-composer
       - restore-cache-npm
-      - npm-run-dev
+      - npm-ci
       - save-cache-npm
+      - npm-run-dev
       - migration
       - test-unittest
