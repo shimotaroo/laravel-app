@@ -33,6 +33,7 @@ class ArticleControllerTest extends TestCase
     //ログインユーザーが投稿画面にアクセス
     public function testAuthCreate()
     {
+        $this->withoutExceptionHandling();
         //テストに必要なUserモデルを「準備」
         $user = factory(User::class)->create();
 
@@ -80,6 +81,7 @@ class ArticleControllerTest extends TestCase
     //ログインユーザーが投稿編集画面にアクセス
     public function testAuthEdit()
     {
+        $this->withoutExceptionHandling();
         $article = factory(Article::class)->create();
         $user = $article->user;
 

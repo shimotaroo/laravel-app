@@ -1,21 +1,94 @@
 version: 2.1
-jobs:
-  build:
+
+executors:
+  laravel-circleci:
     docker:
-      - image: circleci/php:7.4-fpm-node-browsers
+      - image: circleci/php:7.4-node-browsers
       - image: circleci/mysql:5.7
     environment:
       - APP_DEBUG: true
       - APP_ENV: testing
       - APP_KEY: base64:Q0cJelvqonwSbdZ591P40cyMQ13+AfHj+1jYy4cALfM=
-      - DB_CONNECTION: circle_test
+      - DB_CONNECTION: circle_testing
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
+    working_directory: ~/repo
+
+commands:
+  install-dockerize:
+    steps:
+      - run:
+          name: Install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.6.1
+  install-php-extensions:
+    steps:
+      - run:
+          name: Install PHP Exetensions
+          command: sudo docker-php-ext-install pdo_mysql
+  restore-cache-composer:
+    steps:
+      - restore_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+  install-composer:
+    steps:
+      - run:
+          name: Install Composer
+          command: composer install -n --prefer-dist
+  save-cache-composer:
+    steps:
+      - save_cache:
+          key: v1-dependencies-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+  npm-ci:
+    steps:
+      - run:
+          name: npm CI
+          command: |
+            if [ ! -d node_modules ]; then
+              npm ci
+            fi
+  restore-cache-npm:
+    steps:
+      - restore_cache:
+          key: npm-cache-{{ checksum "package-lock.json" }}
+  npm-run-dev:
+    steps:
+      - run:
+          name: Run npm
+          command: npm run dev
+  save-cache-npm:
+    steps:
+      - save_cache:
+          key: npm-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+  migration:
+    steps:
+      - run:
+          name: Migration
+          command: php artisan migrate
+  test-unittest:
+    steps:
+      - run:
+          name: Run PHPUnit
+          command: ./vendor/bin/phpunit
+
+jobs:
+  build:
+    executor:
+      name: laravel-circleci
     steps:
       - checkout
-      - run: composer install -n --prefer-dist
-      - run: sudo docker-php-ext-install pdo_mysql
-      - run: npm ci
-      - run: npm run dev
-      - run:
-        name: Run PHPUnit
-        command: ./vendor/bin/phpunit
+      - install-dockerize
+      - install-php-extensions
+      - restore-cache-composer
+      - install-composer
+      - save-cache-composer
+      - restore-cache-npm
+      - npm-ci
+      - save-cache-npm
+      - npm-run-dev
+      - migration
+      - test-unittest
