@@ -38,19 +38,24 @@ commands:
   save-cache-composer:
     steps:
       - save_cache:
-          paths:
-            - ./vendor
           key: v1-dependencies-{{ checksum "./composer.json" }}
-  npm-ci:
+          paths:
+            - vendor
+  restore-cache-npm:
     steps:
-      - run:
-          name: npm CI
-          command: npm ci
+      - restore_cache:
+          key: npm-cache-{{ checksum "package-lock.json" }}
   npm-run-dev:
     steps:
       - run:
           name: Run npm
           command: npm run dev
+  save-cache-npm:
+    steps:
+      - save_cache:
+          key: npm-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
   migration:
     steps:
       - run:
@@ -75,7 +80,8 @@ jobs:
       - restore-cache-composer
       - install-composer
       - save-cache-composer
-      - npm-ci
+      - restore-cache-npm
       - npm-run-dev
+      - save-cache-npm
       - migration
       - test-unittest
