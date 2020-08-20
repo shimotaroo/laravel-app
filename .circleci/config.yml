@@ -11,6 +11,7 @@ executors:
       - APP_KEY: base64:Q0cJelvqonwSbdZ591P40cyMQ13+AfHj+1jYy4cALfM=
       - DB_CONNECTION: circle_testing
       - MYSQL_ALLOW_EMPTY_PASSWORD: true
+    working_directory: ~/repo
 
 commands:
   install-dockerize:
