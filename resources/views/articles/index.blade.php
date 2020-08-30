@@ -143,7 +143,6 @@
                     </div>
                 </div>
             @endif
-
             <div class="mt-5 mb-3 col-lg-8 col-md-8 col-sm-12 col-xs-12 p-0 d-flex justify-content-center">
                 @if(isset($sort_type))
                     {{ $articles->appends($sort_type)->links() }}
