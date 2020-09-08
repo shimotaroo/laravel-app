@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -43,29 +43,10 @@ class UserController extends Controller
         $all_request = $request->all();
 
         $profile_image = $request->file('image');
-        if ($profile_image) {
-            $all_request['image'] = $this->saveProfileImage($profile_image, $user->id);
-        }
-
+        $upload_info = Storage::disk('s3')->putFile('image', $profile_image, 'public');
+        $all_request['image'] = Storage::disk('s3')->url($upload_info);
         $user->fill($all_request)->save();
         return redirect()->route('users.show', ["name" => $user->name]);
-    }
-
-    //画像の名前変更、storageに保存
-    public function saveProfileImage($profile_image, $id)
-    {
-        //インスタンス取得
-        $image = \Image::make($profile_image);
-        //リサイズ
-        $image->fit(80, 80, function($constraint){
-            $constraint->upsize();
-        });
-        //保存
-        $file_name = 'profile_'.$id.'.'.$profile_image->getClientOriginalExtension();
-        $save_path = 'storage/'.$file_name;
-        $image->save($save_path);
-
-        return $file_name;
     }
 
     //パスワード編集画面
