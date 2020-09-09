@@ -14,7 +14,7 @@ class AddImageColumnToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('image')->default('default.png')->after('password');
+            $table->string('image')->default('https://mensetsu-s3-bucket.s3.ap-northeast-1.amazonaws.com/image/default.png')->after('password');
         });
     }
 

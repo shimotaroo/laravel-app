@@ -34,7 +34,7 @@
                 @foreach($articles as $article)
                     <div class='card mt-3 col-lg-8 col-md-8 col-sm-12 col-xs-12 p-0'>
                         <div class='card-body d-flex flex-row align-items-center mt-3 ml-3'>
-                            <img src="{{ asset('storage/'.$article->user->image) }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
+                            <img src="{{ $article->user->image }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
                             <div>
                                 <h5 class='font-weight-bold'>
                                     {{ $article->user->name }}

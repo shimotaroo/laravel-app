@@ -20,7 +20,7 @@
                                 @csrf
                                 {{-- 編集フォーム --}}
                                 <label for="image">
-                                    <img src="{{ asset('storage/'.$user->image) }}" id="img" class="img-fuild rounded-circle" width="80" height="80">
+                                    <img src="{{ $user->image }}" id="img" class="img-fuild rounded-circle" width="80" height="80">
                                     <input type="file" id="image" name="image" onchange="previewImage(this);" class="d-none">
                                 </label>
                                 <div class="md-form col-lg-6 col-md-7 col-sm-8 col-xs-10 mx-auto">

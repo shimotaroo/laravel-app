@@ -42,10 +42,13 @@ class UserController extends Controller
         $user = User::where('name', $name)->first();
         $all_request = $request->all();
 
-        $profile_image = $request->file('image');
-        $upload_info = Storage::disk('s3')->putFile('image', $profile_image, 'public');
-        $all_request['image'] = Storage::disk('s3')->url($upload_info);
-        $user->fill($all_request)->save();
+        if (isset($all_request['image'])) {
+            $profile_image = $request->file('image');
+            $upload_info = Storage::disk('s3')->putFile('image', $profile_image, 'public');
+            $all_request['image'] = Storage::disk('s3')->url($upload_info);
+            $user->fill($all_request)->save();
+        }
+
         return redirect()->route('users.show', ["name" => $user->name]);
     }
 

@@ -25,7 +25,7 @@
         @auth
         <li class="nav-item dropdown">
             <a href="" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="{{ asset('storage/'.$user->image) }}" alt="Contact Person" class="img-fuild rounded-circle" width="30" height="30">
+                <img src="{{ $user->image }}" alt="Contact Person" class="img-fuild rounded-circle" width="30" height="30">
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
                 <button class="dropdown-item text-center" type="button" onclick="location.href='{{ route("users.show", ["name" => Auth::user()->name]) }}'">

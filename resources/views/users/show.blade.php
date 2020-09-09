@@ -15,7 +15,6 @@
                 <div class="card-body d-flex flex-row align-items-center mt-2 mb-3">
                     <div class="ml-5">
                         <a href="{{ route('users.show', ['name' => $user->name]) }}" class="text-dark">
-                            {{-- <img src="{{ asset('storage/'.$user->image) }}" alt="Contact Person" class="img-fuild rounded-circle" width="60" height="60"> --}}
                             <img src="{{ $user->image }}" alt="Contact Person" class="img-fuild rounded-circle" width="60" height="60">
                         </a>
                     </div>
