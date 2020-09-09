@@ -67,7 +67,7 @@ class UserControllerTest extends TestCase
             'name' => $new_name,
             'age' => '30',
             'email' => 'test@mail.com',
-            'image' => 'sample.png'
+            'image' => 'https://mensetsu-s3-bucket.s3.ap-northeast-1.amazonaws.com/image/sample.png'
         ]);
 
         $response->assertRedirect(route('users.show', ['name' => $new_name]));
