@@ -47,7 +47,7 @@
                         @foreach($post_articles as $post_article)
                         <div class='card mt-5 col-10 mr-auto ml-auto p-0 grey lighten-5'>
                             <div class='card-body d-flex flex-row align-items-center mt-3 ml-3'>
-                                <img src="{{ asset('storage/'.$user->image) }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
+                                <img src="{{ $user->image }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
                                 <div>
                                     <h5 class='font-weight-bold'>
                                         {{ $post_article->user->name }}
@@ -158,7 +158,7 @@
                         @foreach($like_articles as $like_article)
                         <div class='card mt-5 col-10 mr-auto ml-auto p-0 grey lighten-5'>
                             <div class='card-body d-flex flex-row align-items-center mt-3 ml-3'>
-                                <img src="{{ asset('storage/'.$user->image) }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
+                                <img src="{{ $user->image }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
                                 <div>
                                     <h5 class='font-weight-bold'>
                                         {{ $like_article->user->name }}
