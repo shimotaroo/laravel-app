@@ -21,7 +21,7 @@
                         <div class="mt-2 col-xs-12 col-md-10 mx-auto">
                             <div class="card-body d-flex flex-row">
                                 <div class='card-body d-flex flex-row align-items-center mb-3'>
-                                    <img src="{{ $user->image) }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
+                                    <img src="{{ $article->user->image }}" alt="Contact Person" class="img-fuild rounded-circle mr-3" width="60" height="60">
                                     <div>
                                         <h5 class='font-weight-bold'>
                                             {{ $article->user->name }}
