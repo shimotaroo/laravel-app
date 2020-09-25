@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Rules\PasswordValidation;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'min:3', 'max:15', 'unique:users'],
             'age' => ['numeric', 'min:1', 'max:100', 'nullable'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', new PasswordValidation, 'confirmed'],
         ]);
     }
 
