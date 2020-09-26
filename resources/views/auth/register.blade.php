@@ -41,7 +41,7 @@
                             <div class="md-form col-lg-7 col-md-8 col-sm-9 col-xs-10 mx-auto">
                                 <label for="password">パスワード<small class="text-warning ml-1">【必須】</small></label>
                                 <input type="password" class="form-control" id="password" name="password" required>
-                                <small>※8文字以上で入力してください</small>
+                                <small>※半角英字（小文字）、半角英字（大文字）、半角数字を1文字以上含む8文字以上で入力してください</small>
                             </div>
                             <div class="md-form col-lg-7 col-md-8 col-sm-9 col-xs-10 mx-auto">
                                 <label for="password_confirmation">パスワード（確認）<small class="text-warning ml-1">【必須】</small></label>
