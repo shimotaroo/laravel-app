@@ -12,6 +12,22 @@ class UserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    //ユーザー登録処理
+    public function testRegisterUser()
+    {
+        $this->get(route('register'));
+        $response = $this->post(route('register'), [
+            'name' => 'テストユーザー',
+            'age' => 30,
+            'email' => 'test@mail.com',
+            'password' => 'Password1111',
+            'password_confirmation' => 'Password1111',
+        ]);
+
+        //'articles.index'にリダイレクトさせる指示ではなく、'articles,index'にリダイレクトしているかをチェック
+        $response->assertRedirect(route('articles.index'));
+    }
+
     //未ログインユーザーでマイページにアクセス
     public function testGuestShow()
     {

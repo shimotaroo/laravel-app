@@ -51,7 +51,7 @@ class PasswordValidation implements Rule
      */
     public function passes($attribute, $value)
     {
-        $regexOfValidation = '';
+        $regexOfValidation = "[a-zA-z\d]";
         // 半角英字（小文字）1文字以上
         if ($this->includeLessThanOneLowerLetter) {
             $regexOfValidation = "(?=.*?[a-z])" . $regexOfValidation;
@@ -66,7 +66,7 @@ class PasswordValidation implements Rule
         }
         // 最大、最小文字数
         if ($this->maxCharacter || $this->minCharacter) {
-            $regexOfValidation = $regexOfValidation . "{{$this->minCharacter}, {$this->maxCharacter}}";
+            $regexOfValidation = $regexOfValidation . "{{$this->minCharacter},{$this->maxCharacter}}";
         }
         $regexOfValidation = "/\A{$regexOfValidation}+\z/";
 
