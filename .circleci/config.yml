@@ -90,7 +90,7 @@ jobs:
       - npm-ci
       - save-cache-npm
       - npm-run-dev
-      - migration&seeding
+      - migration-seeding
       - test-unittest
   deploy:
     docker:
