@@ -32,6 +32,9 @@ Route::get('/', 'ArticleController@index')->name('articles.index');
 Route::resource('/articles', 'ArticleController')->except(['index', 'show'])->middleware('auth');
 Route::resource('/articles', 'ArticleController')->only(['show']);
 
+// RESTful API
+Route::resource('/rest', 'RestappController', ['only' => ['index', 'show', 'create', 'store', 'destroy']]);
+
 //ユーザーページ表示
 Route::prefix('users')->name('users.')->group(function(){
     Route::get('/{name}', 'UserController@show')->name('show')->middleware('auth');

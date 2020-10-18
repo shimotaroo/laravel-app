@@ -24,9 +24,9 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'prefecture_id' => 'required',
-            'company_type_id' => 'required',
-            'phase_id' => 'required',
+            'prefecture_id' => 'required|max:1',
+            'company_type_id' => 'required|max:1',
+            'phase_id' => 'required|max:1',
             'question_content' => 'required|max:1000',
             'other_information' => 'required|max:1000',
             'impression' => 'required|max:1000',
