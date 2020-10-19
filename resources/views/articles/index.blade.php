@@ -25,7 +25,7 @@
                 @if (isset($search_condition_for_prefecture))
                     <div class="col-12">
                         <small class="ml-3">
-                            検索条件<i class="fas fa-angle-double-right mx-2"></i>都道府県：{{ $search_condition_for_prefecture }}、事業形態：{{ $search_condition_for_company }}、フェーズ：{{ $search_condition_for_phase }}
+                            検索条件<i class="fas fa-angle-double-right mx-2"></i>都道府県：{{ $search_condition_prefecture }}、事業形態：{{ $search_condition_company }}、フェーズ：{{ $search_condition_phase }}
                         </small>
                     </div>
                 @endif
@@ -147,7 +147,7 @@
             <div class="mt-5 mb-3 col-lg-8 col-md-8 col-sm-12 col-xs-12 p-0 d-flex justify-content-center">
                 @if(isset($sort_type))
                     {{ $articles->appends($sort_type)->links() }}
-                @elseif(isset($search_conditions))
+                @elseif(isset($search_conditions_pagination))
                     {{ $articles->appends(request()->input())->links() }}
                 @else
                     {{ $articles->links() }}

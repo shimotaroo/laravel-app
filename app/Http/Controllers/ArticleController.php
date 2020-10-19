@@ -10,7 +10,6 @@ use App\Prefecture;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -29,19 +28,19 @@ class ArticleController extends Controller
         $sort = "新しい順";
 
         //検索用のラジオボタン用のデータ
-        $prefecture = config('forSerchByPrefecture');
-        $company_type = config('forSerchByCompanyType');
-        $phase = config('forSerchByPhase');
+        $radio_data = $this->getDataOfRadio();
 
-        return view('articles.index', [
+        $data = [
             'articles' => $articles,
             'user' => $user,
-            'prefecture' => $prefecture,
-            'company_type' => $company_type,
-            'phase' => $phase,
+            'prefecture' => $radio_data['prefecture'],
+            'company_type' => $radio_data['company_type'],
+            'phase' => $radio_data['phase'],
             'sort' => $sort,
             'articles_count' => $articles_count,
-        ]);
+        ];
+
+        return view('articles.index', $data);
     }
 
     //投稿画面
@@ -49,10 +48,13 @@ class ArticleController extends Controller
     {
         $article = null;
         $user = User::where('id', Auth::id())->first();
-        return view('articles.create', [
+
+        $data = [
             'article' => $article,
             'user' => $user,
-        ]);
+        ];
+
+        return view('articles.create', $data);
     }
 
     //投稿処理
@@ -61,6 +63,7 @@ class ArticleController extends Controller
         $article->fill($request->all());
         $article->user_id = $request->user()->id;
         $article->save();
+
         return redirect()->route('articles.index');
     }
 
@@ -68,16 +71,20 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         $user = User::where('id', Auth::id())->first();
-        return view('articles.edit', [
+
+        $data = [
             'article' => $article,
             'user' => $user,
-            ]);
+        ];
+
+        return view('articles.edit', $data);
     }
 
     //編集処理
     public function update(ArticleRequest $request, Article $article)
     {
         $article->fill($request->all())->save();
+
         return redirect()->route('articles.index');
     }
 
@@ -85,6 +92,7 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
+
         return redirect()->route('articles.index');
     }
 
@@ -93,10 +101,12 @@ class ArticleController extends Controller
     {
         $user = User::where('id', Auth::id())->first();
 
-        return view('articles.show', [
+        $data = [
             'article' => $article,
             'user' => $user,
-            ]);
+        ];
+
+        return view('articles.show', $data);
     }
 
     //いいね機能
@@ -131,9 +141,7 @@ class ArticleController extends Controller
         $articles_count = $all_articles_by_sort->count();
 
         //検索用のラジオボタン用のデータ
-        $prefecture = config('forSerchByPrefecture');
-        $company_type = config('forSerchByCompanyType');
-        $phase = config('forSerchByPhase');
+        $radio_data = $this->getDataOfRadio();
 
         switch($sort_type) {
             case 'desc':
@@ -151,9 +159,9 @@ class ArticleController extends Controller
             'articles' => $articles,
             'user' => $user,
             'sortType' => $sort_type,
-            'prefecture' => $prefecture,
-            'company_type' => $company_type,
-            'phase' => $phase,
+            'prefecture' => $radio_data['prefecture'],
+            'company_type' => $radio_data['company_type'],
+            'phase' => $radio_data['phase'],
             'sort' => $sort,
             'articles_count' => $articles_count,
         ];
@@ -162,57 +170,51 @@ class ArticleController extends Controller
 
     public function search(Request $request)
     {
-        $prefecture_serch = $request->prefecture_search;
+        $prefecture_search = $request->prefecture_search;
         $company_search = $request->company_search;
         $phase_search = $request->phase_search;
-
-        $query = Article::query();
+        $Article = new Article;
         $user = User::where('id', Auth::id())->first();
         //検索用のラジオボタン用のデータ
-        $prefecture = config('forSerchByPrefecture');
-        $company_type = config('forSerchByCompanyType');
-        $phase = config('forSerchByPhase');
+        $radio_data = $this->getDataOfRadio();
 
         $sort = "新しい順";
 
-        //DBからデータ取得
-        if($prefecture_serch !== "0") {
-            $query->where('prefecture_id', $prefecture_serch);
-            $search_condition_for_prefecture = Prefecture::find($prefecture_serch)->prefecture;
-        } else {
-            $search_condition_for_prefecture = '指定なし';
-        }
-        if($company_search  !== "0") {
-            $query->where('company_type_id', $company_search );
-            $search_condition_for_company = CompanyType::find($company_search)->company_type;
-        } else {
-            $search_condition_for_company = '指定なし';
-        }
-        if($phase_search !== "0") {
-            $query->where('phase_id', $phase_search);
-            $search_condition_for_phase = Phase::find($phase_search)->phase;
-        } else {
-            $search_condition_for_phase = '指定なし';
-        }
+        $query = $Article->query();
+        $search_query = $Article->makeQueryOfSearch($query, $prefecture_search, $company_search, $phase_search);
+        $search_conditions = $Article->getSearchConditions($prefecture_search, $company_search, $phase_search);
 
-        $all_articles_by_search = $query->orderBy('created_at', 'desc')->with(['user','prefecture', 'companyType', 'phase', 'likes']);
+        $all_articles_by_search = $search_query->orderBy('created_at', 'desc')->with(['user','prefecture', 'companyType', 'phase', 'likes']);
         $articles = $all_articles_by_search->paginate(3);
         $articles_count = $all_articles_by_search->count();
 
-        $search_conditions = [$prefecture_serch, $company_search, $phase_search];
+        //ページネーション用データ
+        $search_conditions_pagination = [$prefecture_search, $company_search, $phase_search];
 
-        return view('articles.index', [
+        $data = [
             'articles' => $articles,
             'user' => $user,
-            'prefecture' => $prefecture,
-            'company_type' => $company_type,
-            'phase' => $phase,
-            'search_conditions' => $search_conditions,
+            'prefecture' => $radio_data['prefecture'],
+            'company_type' => $radio_data['company_type'],
+            'phase' => $radio_data['phase'],
+            'search_conditions_pagination' => $search_conditions_pagination,
             'sort' => $sort,
             'articles_count' => $articles_count,
-            'search_condition_for_prefecture' => $search_condition_for_prefecture,
-            'search_condition_for_company' => $search_condition_for_company,
-            'search_condition_for_phase' => $search_condition_for_phase
-        ]);
+            'search_condition_prefecture' => $search_conditions['prefecture'],
+            'search_condition_company' => $search_conditions['company'],
+            'search_condition_phase' => $search_conditions['phase'],
+        ];
+
+        return view('articles.index', $data);
+    }
+
+    //検索ラジオボタン用のデータ
+    private function getDataOfRadio()
+    {
+        return [
+            'prefecture' => config('forSerchByPrefecture'),
+            'company_type' => config('forSerchByCompanyType'),
+            'phase' => config('forSerchByPhase'),
+        ];
     }
 }
